@@ -56,5 +56,8 @@ rushHour = animation.FuncAnimation(fig, animate,
                                init_func = init,
                                repeat = False)
 
+f = r"c://Users/judit/Documents/Algoritmen_Heuristieken/JuLiDy/animation.gif" 
+writergif = animation.PillowWriter(fps = 2) 
+rushHour.save(f, writer = writergif)
 
 plt.show()

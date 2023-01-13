@@ -4,10 +4,12 @@ from board import Board
 class Rushhour:
 
     def __init__(self, game):
+        # Create dictionary of cars and load in cars form input file
         self.cars = {}
         self.load_cars(f"gameboards/Rushhour{game}.csv")
 
     def load_cars(self, filename):
+        """ Read in input file, strip variables per car and stores it in a cars dictionary """
         with open(filename) as f:
             next(f)
             counter = 0
@@ -21,6 +23,7 @@ class Rushhour:
                 counter+=1
 
     def place_cars(self):
+        """ Place cars in constructed grid using coördinates and length from the cars dictionary """
         for car in self.cars:
             if self.cars[car].orientation == "H":
                 for i in range(self.cars[car].column, self.cars[car].column + self.cars[car].length):
@@ -30,19 +33,32 @@ class Rushhour:
                     board.board[i][self.cars[car].column] = self.cars[car].car_id
 
         return board
+    
+    def move_cars(self):
+        """ Reads input commands to select car object and move it the input ammount of spaces. 
+        Takes oriëntatin of car object into consideration for direction of movement. Cars can only move forward or backwards not sideways."""
+        pass
+    
+    def is_valid(self):
+        """ Checks if input move is valid """
+        pass
+
+    def is_solved(self):
+        """Checks if case is solved (checks if red car is in position) """
+        pass
 
 if __name__ == "__main__":
 
     from sys import argv
 
-    # Check command line arguments
+    # Check command line arguments and respond with usage in case of wrong input
     if len(argv) != 2:
         print("Usage: python rushhour.py <Size>x<Size>_boardnumber")
 
     # Load the requested game
     game_name = argv[1]
 
-    # strip filename for size of board
+    # strip input filename for size of board
     size = int(game_name[0])
     if game_name[1].isdigit():
         size = size * 10

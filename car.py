@@ -1,5 +1,6 @@
 class Car:
     def __init__(self, id, orientation, column, row, length) -> None:
+        # Create car object with variables read in from input file
         self.car_id = id
         self.orientation = orientation
         self.column = int(column) - 1

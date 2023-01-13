@@ -43,9 +43,22 @@ class Rushhour:
         """ Checks if input move is valid """
         pass
 
-    def is_solved(self):
+    def is_solved(self) -> bool:
         """Checks if case is solved (checks if red car is in position) """
-        pass
+        # This is inspired by the is_won function of schuifpuzzel.py
+        # Go through all cars
+        for i in range (len(rushhour.cars)):
+            # Find the red car
+            if self.cars[i].car_id == 'X':
+                # Get the row of the red car and save it in a variable
+                row_x: int
+                row_x = int(self.cars[i].row)
+
+        # Check if the red car is at the right place and return True if finished, false if not
+        if board.board[row_x][-2] == "X" and board.board[row_x][-1] == "X":
+            return True
+        else:
+            return False
 
 if __name__ == "__main__":
 

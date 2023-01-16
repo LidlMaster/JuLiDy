@@ -1,5 +1,8 @@
 from car import Car
 from board import Board
+import csv
+from cs50 import get_string
+from typing import List
 
 class Rushhour:
 
@@ -18,7 +21,48 @@ class Rushhour:
                 data = line.strip().split(",")
                 car = Car(data[0], data[1], data[2], data[3], data[4])
                 self.cars[data[0]] = car
+                
+    def make_dict() -> List:
+        """ Creates a list of fieldnames of the list of dicts.
+        post: field_names is a list in which the fieldnames of the dict is stated. 
+        """
+        # Create field_names
+        field_names: List
+        field_names = ['car', 'move']
+        return field_names
 
+    def give_output(file: str, field_names: List, dict: List) -> None:
+        """ Creates a csv file of the output dict, if asked.
+        pre: file is a string, field_names is a list and dict is a list of dictionaries.
+        post: a csv file of the given name
+        """
+        # Check if file is given
+        if file != 'n':
+            # Write the list of dicts to a csv file
+            with open(file, 'w') as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames = field_names)
+                writer.writeheader()
+                writer.writerows(dict)
+
+    def want_output() -> str:
+        """Asks the user if they want output and asks filename.
+        post: file is a string of the filename.
+        """
+        # Asks the user if they want output
+        output: str
+        output = get_string("Do you want output in a seperate file? Y/N ")
+        # Set file
+        file: str
+        file = 'n'
+        # Check if output is asked
+        if output == 'y' or output == 'Y':
+            # Check if filename is valid
+            while not file.endswith('.csv'):
+                # Asks for the filename
+                file = get_string("To what csv file do you want it written? ")
+        # Returns
+        return file
+    
     def place_cars(self):
         """ Place cars in constructed grid using coördinates and length from the cars dictionary """
         for car in self.cars:

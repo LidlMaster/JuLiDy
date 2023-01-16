@@ -22,9 +22,11 @@ class Rushhour:
     def place_cars(self):
         """ Place cars in constructed grid using coördinates and length from the cars dictionary """
         for car in self.cars:
+            # Place cars with Horizontal orientation
             if self.cars[car].orientation == "H":
                 for i in range(self.cars[car].column, self.cars[car].column + self.cars[car].length):
                     board.board[self.cars[car].row][i] = self.cars[car].car_id
+            #  Place cars with Vertical orientation   
             else:
                 for i in range(self.cars[car].row, self.cars[car].row + self.cars[car].length):
                     board.board[i][self.cars[car].column] = self.cars[car].car_id
@@ -34,34 +36,48 @@ class Rushhour:
     def move_cars(self, command):
         """ Reads input commands to select car object and move it the input ammount of spaces. 
         Takes oriëntatin of car object into consideration for direction of movement. Cars can only move forward or backwards not sideways."""
+        # Isolate and save carID from input string into variable
         autoID = ''
         for i in range(len(command)):
             if command[i] == ' ':
                 break
             else: 
                 autoID = autoID + command[i]
+       
+        # Isolate and save input string movingdistance into variable and convert into integer
         for i in range(len(command)):
+                # Accounts for dubble digit numbers
                 if command[i] == '-':
                     move = int(command[i + 1])
                     move = int(move) * -1   
                     break
                 elif command[i].isdigit():
                     move = int(command[i])
+        
+        # Selects input vehicle from dictionary
         for car in self.cars:
             if self.cars[car].car_id == autoID:
                 orientation = self.cars[car].orientation
+                # Checks if input command is valid
                 if self.is_valid(command, self.cars[car], autoID):
+                    # Moves vehicles with Horizontal orientation
                     if orientation == "H":
+                        # Empties current vehicle locations on grid
                         for i in range(self.cars[car].column, self.cars[car].column + self.cars[car].length):
                             board.board[self.cars[car].row][i] = "_"
+                        # Changes collumn coördinate of selected vehicle to new location in dictionary
                         self.cars[car].column = self.cars[car].column + move
+                        # Updates car location on grid of gameboard
                         for i in range(self.cars[car].column, self.cars[car].column + self.cars[car].length):
                             board.board[self.cars[car].row][i] = self.cars[car].car_id
                             
                     else:
+                        # Moves cars with Vertical orientation
                         for i in range(self.cars[car].row, self.cars[car].row + self.cars[car].length):
                             board.board[i][self.cars[car].column] = "_"
+                        # Changes row coördinate of selected vehicle to new location in dictionary
                         self.cars[car].row = self.cars[car].row + move
+                        # Updates car location on grid of gameboard
                         for i in range(self.cars[car].row, self.cars[car].row + self.cars[car].length):
                             board.board[i][self.cars[car].column] = self.cars[car].car_id
                     # MOVE BITCH
@@ -70,10 +86,13 @@ class Rushhour:
     
     def is_valid(self, command, car, autoID) -> bool:
         """ Checks if input move is valid """
+        # Check if slected vehicle exists in dictionary
         if autoID not in self.cars:
             return False
         else:
+            # Isolate and save input string movingdistance into variable and convert into integer
             for i in range(len(command)):
+                # Accounts for dubble digit numbers
                 if command[i] == '-':
                     move = int(command[i+1])
                     move = int(move) * -1 
@@ -104,6 +123,7 @@ class Rushhour:
                         if board.board[i][car.column] != '_' or board.board[i][car.column] != autoID:
                             return False
                     return True
+            # Checks if orientation is invalid (not H or V)   
             else:
                 return False
 
@@ -149,13 +169,15 @@ if __name__ == "__main__":
     rushhour = Rushhour(game_name)
 
     print(rushhour.place_cars())
-
+    # Start game
     while True:
-        # Prompt
+        # Prompt input from user or algorithm 
         command = input("Welke auto wil je waarheen bewegen?").upper()
 
+        # Uses input command to move selceted vehicle
         rushhour.move_cars(command)
 
+        # Checks if game is solved and ends game
         if rushhour.is_solved():
             print("TRUEEEEEE")
             break

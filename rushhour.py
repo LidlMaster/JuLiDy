@@ -50,6 +50,8 @@ class Rushhour:
         for car in self.cars:
             if self.cars[car].car_id == autoID:
                 orientation = self.cars[car].orientation
+                if not self.is_valid(command, self.cars[car], autoID):
+                    print("BAJBASUBD")
                 if self.is_valid(command, self.cars[car], autoID):
                     if orientation == "H":
                         for i in range(self.cars[car].column, self.cars[car].column + self.cars[car].length):
@@ -76,20 +78,21 @@ class Rushhour:
             for i in range(len(command)):
                 if command[i] == '-':
                     move = int(command[i+1])
-                    move = int(move) * -1   
+                    move = int(move) * -1 
                     break
                 elif command[i].isdigit():
                     move = int(command[i])
                     break
+            print(car.orientation)
             if car.orientation == 'H':
-                if car.column + move > len(board.board) or car.column + move + 1 > len(board.board):
+                if car.column + move >= len(board.board) or car.column + move + 1 >= len(board.board):
                     return False
                 if (board.board[car.row][car.column + move] == '_' or board.board[car.row][car.column + move] == autoID) and (board.board[car.row][car.column + move + 1] == '_' or board.board[car.row][car.column + move + 1] == autoID):
                     return True
             elif car.orientation == 'V':
-                if car.row + move > len(board.board) or car.row + move + 1 > len(board.board):
+                if car.row + move >= len(board.board) or car.row + move + 1 >= len(board.board):
                     return False
-                if board.board[car.row + move][car.column] == '_' and (board.board[car.row + move + 1][car.column] == '_' or board.board[car.row + move + 1][car.column] == autoID):
+                if (board.board[car.row + move][car.column] == '_' or board.board[car.row + move][car.column] == autoID) and (board.board[car.row + move + 1][car.column] == '_' or board.board[car.row + move + 1][car.column] == autoID):
                     return True
             else:
                 return False

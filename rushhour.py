@@ -50,8 +50,6 @@ class Rushhour:
         for car in self.cars:
             if self.cars[car].car_id == autoID:
                 orientation = self.cars[car].orientation
-                if not self.is_valid(command, self.cars[car], autoID):
-                    print("BAJBASUBD")
                 if self.is_valid(command, self.cars[car], autoID):
                     if orientation == "H":
                         for i in range(self.cars[car].column, self.cars[car].column + self.cars[car].length):
@@ -83,11 +81,14 @@ class Rushhour:
                 elif command[i].isdigit():
                     move = int(command[i])
                     break
-            print(car.orientation)
             if car.orientation == 'H':
                 if car.column + move >= len(board.board) or car.column + move + 1 >= len(board.board):
                     return False
                 if (board.board[car.row][car.column + move] == '_' or board.board[car.row][car.column + move] == autoID) and (board.board[car.row][car.column + move + 1] == '_' or board.board[car.row][car.column + move + 1] == autoID):
+                    # Check if there are no cars in between selected car and next location
+                    for i in range(move):
+                        if board.board[car.row][i] is not '_' or board.board[car.row][i] is not autoID:
+                            return False
                     return True
             elif car.orientation == 'V':
                 if car.row + move >= len(board.board) or car.row + move + 1 >= len(board.board):
@@ -142,7 +143,7 @@ if __name__ == "__main__":
 
     while True:
         # Prompt
-        command = input("Welke auto wil je waarheen bewegen?")
+        command = input("Welke auto wil je waarheen bewegen?").upper()
 
         rushhour.move_cars(command)
 

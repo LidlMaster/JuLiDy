@@ -45,21 +45,12 @@ class Rushhour:
                 writer.writerows(dict)
 
     def want_output() -> str:
-        """Asks the user if they want output and asks filename.
+        """Asks the filename.
         post: file is a string of the filename.
         """
-        # Asks the user if they want output
-        output: str
-        output = get_string("Do you want output in a seperate file? Y/N ")
-        # Set file
-        file: str
-        file = 'n'
-        # Check if output is asked
-        if output == 'y' or output == 'Y':
-            # Check if filename is valid
-            while not file.endswith('.csv'):
-                # Asks for the filename
-                file = get_string("To what csv file do you want it written? ")
+        while not file.endswith('.csv'):
+            # Asks for the filename
+            file = get_string("To what csv file do you want it written? ")
         # Returns
         return file
     

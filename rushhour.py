@@ -108,7 +108,7 @@ class Rushhour:
                 if (board.board[car.row][car.column + move] == '_' or board.board[car.row][car.column + move] == autoID) and (board.board[car.row][car.column + move + 1] == '_' or board.board[car.row][car.column + move + 1] == autoID):
                     # Checks if there are no cars in between selected car and next location
                     for i in range(move):
-                        if board.board[car.row][i] != '_' or board.board[car.row][i] != autoID:
+                        if board.board[car.row][car.column + i + car.length] != '_' and board.board[car.row][car.column + i + car.length] != autoID:
                             return False
                     return True
             # Move car for cars with Vertical orientation
@@ -120,7 +120,7 @@ class Rushhour:
                 if (board.board[car.row + move][car.column] == '_' or board.board[car.row + move][car.column] == autoID) and (board.board[car.row + move + 1][car.column] == '_' or board.board[car.row + move + 1][car.column] == autoID):
                     # Checks if there are no cars in between selected car and next location
                     for i in range(move):
-                        if board.board[i][car.column] != '_' or board.board[i][car.column] != autoID:
+                        if board.board[car.row + i + car.length][car.column] != '_' and board.board[car.row + i + car.length][car.column] != autoID:
                             return False
                     return True
             # Checks if orientation is invalid (not H or V)   

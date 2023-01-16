@@ -7,5 +7,6 @@ class Car:
         self.row = int(row) - 1
         self.length = int(length)
 
+
     def __str__(self):
         return f"ID: {self.car_id}, Orientation: {self.orientation}, Column: {self.column}, Row: {self.row}, Length: {self.length}"

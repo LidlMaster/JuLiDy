@@ -18,7 +18,10 @@ class Random:
         """
         options = [-1,1]
         random_move = random.choice(options)
-     
+        
+        # options = [range(-5, 5), 1))]
+        # random_move = random.choice(options)
+
         # options = [range(-(len(main.board.board), len(main.board.board), 1))]
         # random_move = random.choice(options)
         return random_move

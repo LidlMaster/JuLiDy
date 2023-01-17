@@ -17,7 +17,7 @@ if __name__ == "__main__":
     # Load the requested game
     game_name = argv[1]
 
-    # strip input filename for size of board
+    # Strip input filename for size of board
     size = int(game_name[0])
     if game_name[1].isdigit():
         size = size * 10
@@ -30,7 +30,7 @@ if __name__ == "__main__":
     rushhour = Rushhour(game_name, size)
     algorithm = Random()
 
-    # Create list
+    # Create list of moves
     dict = rushhour.make_dict()
     field_names = rushhour.make_field_names()
 
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         print(command)
 
 
-        # Uses input command to move selceted vehicle
+        # Uses input command to move selected vehicle
         rushhour.move_cars(command, dict)
 
         # Checks if game is solved and ends game

@@ -27,14 +27,14 @@ class Random:
         self.command_list.append(f"{vehicle} {move}")
 
 
-if __name__ == "__main__":
-    algorithm = Random()
+# if __name__ == "__main__":
+#     algorithm = Random()
 
-    i = 0
-    while i < 3:
-        commands = algorithm.make_move(algorithm.random_selection(), algorithm.random_movement())
-        i += 1
+#     i = 0
+#     while i < 3:
+#         commands = algorithm.make_move(algorithm.random_selection(), algorithm.random_movement())
+#         i += 1
 
-    print(commands)
+#     print(commands)
 
     

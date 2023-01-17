@@ -1,17 +1,22 @@
 from car import Car
 from board import Board
 import csv
-from typing import List
+from typing import List, TypeVar, Dict, Any
+
+Self = TypeVar("Self", bound="Rushhour")
 
 class Rushhour:
-    def __init__(self, game, size):
-        # Create dictionary of cars and load in cars form input file
+    def __init__(self: Self, game: str, size: int) -> None:
+        """Initialize"""
+        # Create dictionary of cars and load-in cars from input file
+        self.cars: Dict[Any, Any]
         self.cars = {}
         self.load_cars(f"gameboards/Rushhour{game}.csv")
+        self.board: Board
         self.board = Board(size)
 
 
-    def load_cars(self, filename):
+    def load_cars(self, filename: str) -> None:
         """ Read in input file, strip variables per car and stores it in a cars dictionary """
         with open(filename) as f:
             next(f)
@@ -22,22 +27,23 @@ class Rushhour:
                 car = Car(data[0], data[1], data[2], data[3], data[4])
                 self.cars[data[0]] = car
                 
-    def make_field_names(self) -> List:
+    def make_field_names(self) -> List[str]:
         """ Creates a list of fieldnames of the list of dicts.
         post: field_names is a list in which the fieldnames of the dict is stated. 
         """
-        # Create field_names
-        field_names: List
+        # Create a list of the field names
+        field_names: List[str]
         field_names = ['car', 'move']
         return field_names
 
-    def give_output(self, file: str, field_names: List, dict: List) -> None:
+    def give_output(self, file: str, field_names: List[str], dict: List[Dict[str, int]]) -> None:
         """ Creates a csv file of the output dict, if asked.
         pre: file is a string, field_names is a list and dict is a list of dictionaries.
         post: a csv file of the given name
         """
-        # Check if file is given
+        # Check if na,me for file is given
         if file != 'n':
+            # Code from https://www.geeksforgeeks.org/how-to-save-a-python-dictionary-to-a-csv-file/
             # Write the list of dicts to a csv file
             with open(file, 'w') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames = field_names)
@@ -48,6 +54,7 @@ class Rushhour:
         """Asks the filename.
         post: file is a string of the filename.
         """
+        file: str
         file = 'n'
         while not file.endswith('.csv'):
             # Asks for the filename
@@ -55,19 +62,21 @@ class Rushhour:
         # Returns
         return file
 
-    def make_dict(self) -> List:
+    def make_dict(self) -> List[Dict[str, int]]:
         """Makes an empty list
         post: dict is an empty list.
         """
+        dict: List[Dict[str, int]]
         dict = []
         return dict
 
-    def update_dict(self, dict: List, command: str) -> List[dict]:
+    def update_dict(self, dict: List[Dict[str, int]], command: str) -> List[Dict[str, int]]:
         """Updates the dict with the command
         post: dict is a list of dictionaries"""
 
+        # Save the info of the command
         for i in range(len(command)):
-                # Accounts for dubble digit numbers
+                # Accounts for double digit numbers
                 if command[i] == '-':
                     move = int(command[i+1])
                     move = int(move) * -1 
@@ -76,13 +85,14 @@ class Rushhour:
                     move = int(command[i])
                     break
 
+        # Saves info in a dictionary to add to dict
+        dictionary: Dict[str, Any]
         dictionary = {'car': command[0], 'move': move}
-
         dict.append(dictionary)
 
         return dict
     
-    def place_cars(self):
+    def place_cars(self) -> Board:
         """ Place cars in constructed grid using coördinates and length from the cars dictionary """
         for car in self.cars:
             # Place cars with Horizontal orientation
@@ -96,10 +106,11 @@ class Rushhour:
 
         return self.board
     
-    def move_cars(self, command, dict):
+    def move_cars(self, command: str, dict: List[Dict[str, int]]) -> None:
         """ Reads input commands to select car object and move it the input ammount of spaces. 
-        Takes oriëntatin of car object into consideration for direction of movement. Cars can only move forward or backwards not sideways."""
-        # Isolate and save carID from input string into variable
+        Takes oriëntation of car object into consideration for direction of movement. Cars can only move forward or backwards not sideways."""
+        # Isolates and saves carID from input string into variable
+        autoID: str
         autoID = ''
         for i in range(len(command)):
             if command[i] == ' ':
@@ -107,10 +118,11 @@ class Rushhour:
             else: 
                 autoID = autoID + command[i]
        
-        # Isolate and save input string movingdistance into variable and convert into integer
+        # Isolates and saves input string moving-distance into variable and convert into integer
         for i in range(len(command)):
-                # Accounts for dubble digit numbers
+                # Accounts for double digit numbers
                 if command[i] == '-':
+                    move: int
                     move = int(command[i + 1])
                     move = int(move) * -1   
                     break
@@ -120,6 +132,7 @@ class Rushhour:
         # Selects input vehicle from dictionary
         for car in self.cars:
             if self.cars[car].car_id == autoID:
+                orientation: str
                 orientation = self.cars[car].orientation
                 # Checks if input command is valid
                 if self.is_valid(command, self.cars[car], autoID):
@@ -128,7 +141,7 @@ class Rushhour:
                         # Empties current vehicle locations on grid
                         for i in range(self.cars[car].column, self.cars[car].column + self.cars[car].length):
                             self.board.board[self.cars[car].row][i] = "_"
-                        # Changes collumn coördinate of selected vehicle to new location in dictionary
+                        # Changes column coördinate of selected vehicle to new location in dictionary
                         self.cars[car].column = self.cars[car].column + move
                         # Updates car location on grid of gameboard
                         for i in range(self.cars[car].column, self.cars[car].column + self.cars[car].length):
@@ -147,18 +160,19 @@ class Rushhour:
                             self.board.board[i][self.cars[car].column] = self.cars[car].car_id
                         # Update list of dicts
                         dict = self.update_dict(dict, command)
-                    # MOVE BITCH
+
+                    # Print the board
                     print(self.board)
     
-    def is_valid(self, command, car, autoID) -> bool:
+    def is_valid(self, command: str, car: Car, autoID: str) -> bool:
         """ Checks if input move is valid """
-        # Check if slected vehicle exists in dictionary
+        # Check if selected vehicle exists in dictionary
         if autoID not in self.cars:
             return False
         else:
-            # Isolate and save input string movingdistance into variable and convert into integer
+            # Isolates and saves input string movingdistance into variable and convert into integer
             for i in range(len(command)):
-                # Accounts for dubble digit numbers
+                # Accounts for double digit numbers
                 if command[i] == '-':
                     move = int(command[i+1])
                     move = int(move) * -1 
@@ -182,7 +196,7 @@ class Rushhour:
                 # Checks if input move is inside bounds grid
                 if car.row + move + car.length - 1 >= len(self.board.board) or car.row + move < 0:
                     return False
-                # Checks if new loaction is empty or same carID
+                # Checks if new location is empty or same carID
                 if (self.board.board[car.row + move][car.column] == '_' or self.board.board[car.row + move][car.column] == autoID) and (self.board.board[car.row + move + 1][car.column] == '_' or self.board.board[car.row + move + 1][car.column] == autoID):
                     # Checks if there are no cars in between selected car and next location
                     for i in range(move):
@@ -192,15 +206,14 @@ class Rushhour:
             # Checks if orientation is invalid (not H or V)   
             else:
                 return False
+        return False
 
     def is_solved(self) -> bool:
         """Checks if case is solved (checks if red car is in position) """
         # This is inspired by the is_won function of schuifpuzzel.py
         # Go through all cars
         for i in range (len(self.cars)):
-            # Find the red car
-            # if self.cars[i].car_id == 'X':
-                # Get the row of the red car and save it in a variable
+            # Get the row of the red car and save it in a variable
             row_x: int
             row_x = int(self.cars['X'].row)
 

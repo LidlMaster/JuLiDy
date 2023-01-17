@@ -2,7 +2,37 @@ from rushhour import Rushhour
 from board import Board
 from car import Car
 from baseline import Random
+import random
 
+# Baseline algorithm: Random
+# ============================================================================================
+# def random_selection():
+#         """
+#         Randomly choose vehicle to move.
+#         """
+#         print(rushhour.cars)
+#         random_vehicle = random.choice(list(rushhour.cars.items()))
+#         print(random_vehicle)
+#         # id = random_vehicle.car_id
+#         return id
+
+# def random_movement():
+#     """
+#     Randomly choose distance to move.
+#     """
+#     options = [-1,1]
+#     random_move = random.choice(options)
+
+#     # options = [range(-5, 5), 1))]
+#     # random_move = random.choice(options)
+
+#     # options = [range(-(len(main.board.board), len(main.board.board), 1))]
+#     # random_move = random.choice(options)
+#     return random_move
+
+# def make_move(vehicle, move):
+#     return f"{vehicle} {move}"
+# ============================================================================================
 
 
 if __name__ == "__main__":
@@ -39,9 +69,13 @@ if __name__ == "__main__":
     # Start game
     while True:
         # Prompt input from user or algorithm 
-        command = algorithm.make_move(algorithm.random_selection(), algorithm.random_movement())
+        vehicle = algorithm.random_selection(rushhour.cars)
+        # print("v:",vehicle)
+        afstand = algorithm.random_movement()
+        # print("a:",afstand)
+        command = algorithm.make_move(vehicle, afstand)
         # command = input("Welke auto wil je waarheen bewegen?").upper()
-        print(command)
+        # print("c:", command)
 
 
         # Uses input command to move selected vehicle
@@ -49,5 +83,6 @@ if __name__ == "__main__":
 
         # Checks if game is solved and ends game
         if rushhour.is_solved():
+            print("Won")
             break
 

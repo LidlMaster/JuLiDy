@@ -185,7 +185,7 @@ class Rushhour:
             # Move car for cars with Horizontal orientation
             if car.orientation == 'H':
                 # Checks if input move is inside bounds grid
-                if car.column + move + car.length -1 >= len(self.board.board) or car.column < 0:
+                if car.column + move + car.length -1 >= len(self.board.board) or car.column + move < 0:
                     return False
                 if (self.board.board[car.row][car.column + move] == '_' or self.board.board[car.row][car.column + move] == autoID) and (self.board.board[car.row][car.column + move + 1] == '_' or self.board.board[car.row][car.column + move + 1] == autoID):
                     # Checks if there are no cars in between selected car and next location

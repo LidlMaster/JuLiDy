@@ -75,7 +75,7 @@ if __name__ == "__main__":
         # print("a:",afstand)
         command = algorithm.make_move(vehicle, afstand)
         # command = input("Welke auto wil je waarheen bewegen?").upper()
-        # print("c:", command)
+        print("c:", command)
 
 
         # Uses input command to move selected vehicle

@@ -1,16 +1,17 @@
 import random
-import main
+from typing import Dict
+# import main
 
 class Random:
-    def __init__(self):
-        self.command_list= []
-        
-    def random_selection(self):
-        """
-        Randomly choose vehicle to move.
-        """
-        random_vehicle = random.choice(main.rushhour.cars.carid)
-        return random_vehicle
+    def random_selection(self, dictionary: Dict):
+            """
+            Randomly choose vehicle to move.
+            """
+            # print(dictionary)
+            random_vehicle = random.choice(list(dictionary.keys()))
+            # print(random_vehicle)
+            # id = random_vehicle.car_id
+            return random_vehicle
 
     def random_movement(self):
         """
@@ -18,7 +19,7 @@ class Random:
         """
         options = [-1,1]
         random_move = random.choice(options)
-        
+
         # options = [range(-5, 5), 1))]
         # random_move = random.choice(options)
 
@@ -27,7 +28,8 @@ class Random:
         return random_move
 
     def make_move(self, vehicle, move):
-        self.command_list.append(f"{vehicle} {move}")
+        return f"{vehicle} {move}"
+# ============================================================================================
 
 
 # if __name__ == "__main__":

@@ -123,6 +123,7 @@ class Rushhour:
                 # Accounts for double digit numbers
                 if command[i] == '-':
                     move: int
+                    # print("command:",command)
                     move = int(command[i + 1])
                     move = int(move) * -1   
                     break
@@ -163,6 +164,7 @@ class Rushhour:
 
                     # Print the board
                     print(self.board)
+                    print("\n")
     
     def is_valid(self, command: str, car: Car, autoID: str) -> bool:
         """ Checks if input move is valid """

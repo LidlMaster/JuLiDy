@@ -1,6 +1,9 @@
 from rushhour import Rushhour
 from board import Board
 from car import Car
+from baseline import Random
+
+
 
 if __name__ == "__main__":
 
@@ -25,6 +28,7 @@ if __name__ == "__main__":
 
     # Create game
     rushhour = Rushhour(game_name, size)
+    algorithm = Random()
 
     # Create list
     dict = rushhour.make_dict()
@@ -35,7 +39,10 @@ if __name__ == "__main__":
     # Start game
     while True:
         # Prompt input from user or algorithm 
-        command = input("Welke auto wil je waarheen bewegen?").upper()
+        command = algorithm.make_move(algorithm.random_selection(), algorithm.random_movement())
+        # command = input("Welke auto wil je waarheen bewegen?").upper()
+        print(command)
+
 
         # Uses input command to move selceted vehicle
         rushhour.move_cars(command, dict)
@@ -43,3 +50,4 @@ if __name__ == "__main__":
         # Checks if game is solved and ends game
         if rushhour.is_solved():
             break
+

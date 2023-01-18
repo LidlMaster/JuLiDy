@@ -63,8 +63,10 @@ if __name__ == "__main__":
     # Create list of moves
     dict = rushhour.make_dict()
     field_names = rushhour.make_field_names()
+    file = 'output.csv'
 
     print(rushhour.place_cars())
+    comm = 0
     
     # Start game
     while True:
@@ -75,7 +77,9 @@ if __name__ == "__main__":
         # print("a:",afstand)
         command = algorithm.make_move(vehicle, afstand)
         # command = input("Welke auto wil je waarheen bewegen?").upper()
-        # print("c:", command)
+        #print("c:", command)
+        comm = comm + 1
+        
 
 
         # Uses input command to move selected vehicle
@@ -83,6 +87,8 @@ if __name__ == "__main__":
 
         # Checks if game is solved and ends game
         if rushhour.is_solved():
-            print("Won")
+            rushhour.give_output(file, field_names, dict)
+            print("Won in", rushhour.get_moves(file), "moves")
+            print("And with", comm, "commands")
             break
 

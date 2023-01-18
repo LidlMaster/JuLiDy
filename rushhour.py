@@ -1,6 +1,7 @@
 from car import Car
 from board import Board
 import csv
+import pandas as pd
 from typing import List, TypeVar, Dict, Any
 
 Self = TypeVar("Self", bound="Rushhour")
@@ -61,6 +62,19 @@ class Rushhour:
             file = input("To what csv file do you want it written? ")
         # Returns
         return file
+
+    def get_moves(self, file: str) -> int:
+        """Gets the number of moves from the output file.
+        post: number_moves is an int"""
+        output_file: List[str]
+        output_file = pd.read_csv(file)
+
+        # Count number of moves
+        number_moves: int
+        number_moves = len(output_file)
+        return number_moves
+
+        
 
     def make_dict(self) -> List[Dict[str, int]]:
         """Makes an empty list

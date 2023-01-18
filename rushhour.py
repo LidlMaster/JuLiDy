@@ -66,6 +66,8 @@ class Rushhour:
     def get_moves(self, file: str) -> int:
         """Gets the number of moves from the output file.
         post: number_moves is an int"""
+        # Based on https://www.geeksforgeeks.org/how-to-count-the-number-of-lines-in-a-csv-file-in-python/
+        # Get the csv file of the results
         output_file: List[str]
         output_file = pd.read_csv(file)
 

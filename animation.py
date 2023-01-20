@@ -1,7 +1,6 @@
 # Import libraries
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-import numpy as np
 from matplotlib import animation
 
 # Based on https://nickcharlton.net/posts/drawing-animating-shapes-matplotlib.html

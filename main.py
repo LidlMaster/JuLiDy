@@ -3,6 +3,7 @@ from board import Board
 from car import Car
 from baseline import Random
 import random
+from animate_algorithms import Animate
 
 # Baseline algorithm: Random
 # ============================================================================================
@@ -80,8 +81,6 @@ if __name__ == "__main__":
         #print("c:", command)
         comm += 1
         
-
-
         # Uses input command to move selected vehicle
         rushhour.move_cars(command, dict)
 

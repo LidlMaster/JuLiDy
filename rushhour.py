@@ -76,8 +76,6 @@ class Rushhour:
         number_moves = len(output_file)
         return number_moves
 
-        
-
     def make_dict(self) -> List[Dict[str, int]]:
         """Makes an empty list
         post: dict is an empty list.

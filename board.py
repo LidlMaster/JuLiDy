@@ -9,4 +9,4 @@ class Board:
         self.board = np.array([['__' for j in range(size)] for i in range(size)])
 
     def __repr__(self) -> str:
-        return "\n".join(["  ".join(row) for row in self.board])
+        return "\n".join(" ".join(row.ljust(3) for row in sublist) for sublist in self.board)

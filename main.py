@@ -78,7 +78,7 @@ if __name__ == "__main__":
         command = algorithm.make_move(vehicle, afstand)
         # command = input("Welke auto wil je waarheen bewegen?").upper()
         #print("c:", command)
-        comm = comm + 1
+        comm += 1
         
 
 

@@ -89,19 +89,29 @@ class Rushhour:
         post: dict is a list of dictionaries"""
 
         # Save the info of the command
+        autoID: str
+        autoID = ''
+        for i in range(len(command)):
+            if command[i] == ' ':
+                break
+            else: 
+                autoID = autoID + command[i]
+       
+        # Isolates and saves input string moving-distance into variable and convert into integer
         for i in range(len(command)):
                 # Accounts for double digit numbers
                 if command[i] == '-':
-                    move = int(command[i+1])
-                    move = int(move) * -1 
+                    move: int
+                    # print("command:",command)
+                    move = int(command[i + 1])
+                    move = int(move) * -1   
                     break
                 elif command[i].isdigit():
                     move = int(command[i])
-                    break
 
         # Saves info in a dictionary to add to dict
         dictionary: Dict[str, Any]
-        dictionary = {'car': command[0], 'move': move}
+        dictionary = {'car': autoID, 'move': move}
         dict.append(dictionary)
 
         return dict
@@ -179,7 +189,7 @@ class Rushhour:
                     # Print the board
                     if mode == "H" or mode == 'h':
                         print(self.board)
-                    # print("\n")
+                        print("\n")
     
     def is_valid(self, command: str, car: Car, autoID: str) -> bool:
         """ Checks if input move is valid """

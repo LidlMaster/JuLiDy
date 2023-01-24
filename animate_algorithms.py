@@ -1,11 +1,12 @@
 # Import libraries
 import matplotlib.pyplot as plt # type: ignore
 from matplotlib.patches import Rectangle # type: ignore
-from matplotlib.animation import FuncAnimation
+from matplotlib.animation import FuncAnimation # type: ignore
+from matplotlib import animation
 import pandas as pd # type: ignore
 from car import Car
 import random
-from typing import TypeVar, Dict, Any
+from typing import TypeVar, Dict, Any, List
 
 # Make typevar hints for self
 Self = TypeVar("Self", bound="Animate")
@@ -14,21 +15,31 @@ Self = TypeVar("Self", bound="Animate")
 class Animate:
     def __init__(self: Self, game_name: str, size: int) -> None:
         """Initialize"""
+        # Initialize imported variables
         self.game_name = game_name
         self.size = size
+
+        # Initialize lists or dictionaries
         self.cars: Dict[Any, Any]
         self.cars = {}
+        self.direction_x: List[int]
         self.direction_x = []
+        self.direction_y: List[int]
         self.direction_y = []
+        self.car_move: List[str]
         self.car_move = []
+        self.dict_cars: Dict[str, str]
         self.dict_cars = {}
+        self.rows: Dict[str, int]
         self.rows = {}
+        self.columns: Dict[str, int]
         self.columns = {}
 
     def import_output_file(self) -> Any:
         """Read in the output file to later use it to move.
         Post: output is a Pandas dataframe with the moves each car made during the algorithm
         """
+        # Get the output file from the directory
         output = pd.read_csv('output.csv')
         return output
 
@@ -36,12 +47,12 @@ class Animate:
         """Returns the full direction to the gameboard files.
         Post: game is a string which contains the direction to the gameboard file
         """
+        # Save the right directory to the gameboard files
         game = f"gameboards/Rushhour{self.game_name}.csv"
         return game
 
     def create_plot(self) -> Any:
         """Creates the board.
-        Pre: dict_cars is a dictionary with the strings and Rectangle of the cars
         Post: plt is a module, a figure with all the cars in it
         """
         # Create plot
@@ -83,7 +94,9 @@ class Animate:
                 car = Car(data[0], data[1], data[2], data[3], data[4])
                 self.cars[data[0]] = car
 
-    def reset_cars(self):
+    def reset_cars(self) -> None:
+        """Resets the column and row to their original place."""
+        # Go through each car in self.cars
         for car in self.cars:
             # Add one to column and row, this was subtracted in the Car class
             self.cars[car].column += 1
@@ -126,63 +139,110 @@ class Animate:
         # Return the dictionary
         return self.dict_cars
 
-    def save_row(self):
+    def save_row(self) -> Dict[str, int]:
+        """Puts the y coördinate (row number) of each car in a dictionary.
+        Post: self.rows is a dictionary which consists of a string with the car name 
+        and an integer with the y coördinate
+        """
+        # Go through each car in self.cars and get the y coördinate of each Rectangle type
         for car in self.cars:
             self.rows[self.cars[car].car_id] = dict_cars['car{0}'.format(self.cars[car].car_id)].get_y()
+
         return self.rows
 
-    def save_column(self):  
+    def save_column(self) -> Dict[str, int]: 
+        """Puts the x coördinate (column number) of each car in a dictionary.
+        Post: self.rows is a dictionary which consists of a string with the car name 
+        and an integer with the x coördinate
+        """ 
+        # Go through each car in self.cars and the x coördinate of each Rectangel type
         for car in self.cars:
             self.columns[self.cars[car].car_id] = dict_cars['car{0}'.format(self.cars[car].car_id)].get_x()
 
         return self.columns
 
-    def get_column(self, output):
+    def get_column(self, output: Any) -> List[int]:
+        """Puts the column the cars are changed to into a list.
+        Pre: output is an Any type, because it is a Pandas Dataframe
+        Post: self.direction_x is a list with the x coördinates the car is changed to, 
+        according to the output file
+        """
+        # Go through each line of the output file
         for line in output.index:
-            for car in self.cars:  
+            # Go through each car in self.cars
+            for car in self.cars:
+                # Check if the right car is targeted
                 if output['car'][line] == self.cars[car].car_id:
+                    # Check if the car is oriëntated horizontally
                     if self.cars[car].orientation == 'H':
+                        # Change the current column in self.columns
                         self.columns[car] += output['move'][line]
+                        # Add the column number to self.direction_x
                         self.direction_x.append(self.columns[car])
+                    # Check if car is oriëntated vertically and add the column to self.direction_x
                     else:
                         self.direction_x.append(self.columns[car])
 
+        # Return the completed list
         return self.direction_x
 
-    def get_row(self, output):
+    def get_row(self, output: Any) -> List[int]:
+        """Puts the rows the cars are changed to into a list.
+        Pre: output is an Any type, because it is a Pandas Dataframe
+        Post: self.direction_y is a list with the y coördinates the car is changed to, 
+        according to the output file
+        """
+        # Go through each line of the output file
         for line in output.index:
+            # Go through each car in self.cars
             for car in self.cars:
+                # Check if the right car is targeted
                 if output['car'][line] == self.cars[car].car_id:
+                    # Check if car is oriëntated horizontally and add the row to self.direction_y
                     if self.cars[car].orientation == 'H':
                         self.direction_y.append(self.rows[car])
+                    # Check if the car is oriëntated vertically
                     else:
+                        # Change the current row in self.rows
                         self.rows[car] -= output['move'][line]
+                        # Add the row number to self.direction_y
                         self.direction_y.append(self.rows[car])
 
+        # Return the completed list
         return self.direction_y
 
-    def get_car(self, output):
+    def get_car(self, output: Any) -> List[str]:
+        """Puts the cars which are changed into a list.
+        Pre: output is an Any type, because it is a Pandas Dataframe
+        Post: self.car_move is a list in which all the names of the cars, which are moved, 
+        are documented
+        """
+        # Go through each line of the output file
         for line in output.index:
+            # Add the car ID to the list
             self.car_move.append(f"car{output['car'][line]}")
 
+        # Return the completed list
         return self.car_move
 
-    def animating(self, i):
-        for cars in self.dict_cars:
-            if self.car_move[i] == cars:
-                self.dict_cars[cars].set_xy([self.direction_x[i], self.direction_y[i]])
-
-        return self.dict_cars[cars]
-
 #------------------------------------------------------------
-# Set up initial state
+# Set up initial state and get variables
+
+# Set up the initial state of Animate
 animates = Animate('12x12_7', 12)
+
+# Get the needed variables to set the board
 output = animates.import_output_file()
 game = animates.import_game_file()
-animates.reset_cars()
+
+# Prepare to set the board
 animates.get_car_info(game)
 animates.reset_cars()
+
+# Get the needed variable to set the board
 dict_cars = animates.define_cars()
+
+# Get the needed variables to make the animation
 rows = animates.save_row()
 columns = animates.save_column()
 direction_x = animates.get_column(output)
@@ -190,30 +250,48 @@ direction_y = animates.get_row(output)
 car_move = animates.get_car(output)
 
 #------------------------------------------------------------
-# set up figure and animation
-plot = animates.create_plot()
-plt = plot[0]
-fig = plot[1]
-ax = plot[2]
+# Set up animation and refer back to figure
 
-def init():
+# Set the board
+plt, fig, ax = animates.create_plot()
+
+def init() -> Rectangle:
+    """Initialize animation"""
     # Based on https://note.nkmk.me/en/python-dict-keys-values-items/
     # Adds the cars to the board
     for cars in dict_cars.values():
         ax.add_patch(cars)
+
+    # Return each car seperately
     for cars in dict_cars.values():
         return cars
 
-def animation(i):
+def animate(i: int) -> str:
+    """Prepare the steps for the animation.
+    Pre: i is the indez for the animation
+    Post: cars is a string which represents the car that has been moved"""
+    # Go through each car in dict_cars
     for cars in dict_cars:
+        # Make sure that the right car is targeted
         if car_move[i] == cars:
+            # Move the car to the direction of the next int of direction_x and direction_y
             dict_cars[cars].set_xy([direction_x[i], direction_y[i]])
-        #print(self.dict_cars[cars])
+
+    # Return the moved car
     return cars
 
+# Calculate the validity of the animation
 interval = 1 / len(direction_x)
 
-rushHour = FuncAnimation(fig, animation, frames = len(direction_x), interval = interval,
+# Make the animation
+rushHour = FuncAnimation(fig, animate, frames = len(direction_x), interval = interval,
                          init_func = init, repeat = False)
 
+# # Based on https://holypython.com/how-to-save-matplotlib-animations-the-ultimate-guide/
+# # Save animation as an gif-file
+# f = r"c://Users/judit/Documents/Algoritmen_Heuristieken/JuLiDy/animation_random.gif" 
+# writergif = animation.PillowWriter(fps = 2) 
+# rushHour.save(f, writer = writergif)
+
+# Show the animation
 plt.show()

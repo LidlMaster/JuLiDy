@@ -3,7 +3,7 @@ from board import Board
 from car import Car
 from baseline import Random
 import random
-from animate_algorithms import Animate
+# from animate_algorithms import Animate
 
 # Baseline algorithm: Random
 # ============================================================================================
@@ -41,7 +41,7 @@ if __name__ == "__main__":
     from sys import argv
 
     # Check command line arguments and respond with usage in case of wrong input
-    if len(argv) != 2:
+    if len(argv) not in [2, 3]:
         print("Usage: python rushhour.py <Size>x<Size>_boardnumber")
         exit(1)
 

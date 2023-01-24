@@ -120,7 +120,7 @@ class Rushhour:
 
         return self.board
     
-    def move_cars(self, command: str, dict: List[Dict[str, int]]) -> None:
+    def move_cars(self, command: str, dict: List[Dict[str, int]], mode: str) -> None:
         """ Reads input commands to select car object and move it the input ammount of spaces. 
         Takes oriëntation of car object into consideration for direction of movement. Cars can only move forward or backwards not sideways."""
         # Isolates and saves carID from input string into variable
@@ -177,7 +177,8 @@ class Rushhour:
                         dict = self.update_dict(dict, command)
 
                     # Print the board
-                    # print(self.board)
+                    if mode == "H" or mode == 'h':
+                        print(self.board)
                     # print("\n")
     
     def is_valid(self, command: str, car: Car, autoID: str) -> bool:

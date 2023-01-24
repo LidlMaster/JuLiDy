@@ -3,11 +3,7 @@ from board import Board
 from car import Car
 from baseline import Random
 import random
-<<<<<<< HEAD
 # from animate_algorithms import Animate
-=======
-#from animate_algorithms import Animate
->>>>>>> ed5aaaf7f35cd7c104d6c9c04304cbce88656232
 
 # Baseline algorithm: Random
 # ============================================================================================
@@ -52,6 +48,14 @@ if __name__ == "__main__":
     # Load the requested game
     game_name = argv[1]
 
+    # Checks if additional arguments are provided for how code should be ran
+    if len(argv) == 2:
+        # Default is player based input
+        mode = "H"
+    else: 
+        # Else mode is based on additional argument (Currently H for "Hand" or R for "Random")
+        mode = argv[2]
+
     # Strip input filename for size of board
     size = int(game_name[0])
     if game_name[1].isdigit():
@@ -75,24 +79,37 @@ if __name__ == "__main__":
     
     # Start game
     while True:
-        # Prompt input from user or algorithm 
-        vehicle = algorithm.random_selection(rushhour.cars)
-        # print("v:",vehicle)
-        afstand = algorithm.random_movement()
-        # print("a:",afstand)
-        command = algorithm.make_move(vehicle, afstand)
-        # command = input("Welke auto wil je waarheen bewegen?").upper()
-        #print("c:", command)
-        comm += 1
-        
-        # Uses input command to move selected vehicle
-        rushhour.move_cars(command, dict)
+        if mode == "R" or mode == "r":
+            # Prompt input from user or algorithm 
+            vehicle = algorithm.random_selection(rushhour.cars)
+            # print("v:",vehicle)
+            afstand = algorithm.random_movement()
+            # print("a:",afstand)
+            command = algorithm.make_move(vehicle, afstand)
+            comm += 1
 
-        # Checks if game is solved and ends game
-        if rushhour.is_solved():
-            rushhour.give_output(file, field_names, dict)
-            print("Won in", rushhour.get_moves(file), "moves")
-            print("And with", comm, "commands")
-            from animate_algorithms import Animate
-            break
+            # Uses input command to move selected vehicle
+            rushhour.move_cars(command, dict, mode)
+
+            # Checks if game is solved and ends game
+            if rushhour.is_solved():
+                rushhour.give_output(file, field_names, dict)
+                print("Won in", rushhour.get_moves(file), "moves")
+                print("And with", comm, "commands")
+                # from animate_algorithms import Animate
+                break
+
+        
+        elif mode == "H" or mode == 'h':
+            command = input("Welke auto wil je waarheen bewegen?").upper()
+            # Uses input command to move selected vehicle
+            rushhour.move_cars(command, dict, mode)
+
+            # Checks if game is solved and ends game
+            if rushhour.is_solved():
+                rushhour.give_output(file, field_names, dict)
+                print("Won in", rushhour.get_moves(file), "moves")
+                print("And with", comm, "commands")
+                # from animate_algorithms import Animate
+                break
 

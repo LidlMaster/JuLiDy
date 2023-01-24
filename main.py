@@ -3,7 +3,11 @@ from board import Board
 from car import Car
 from baseline import Random
 import random
+<<<<<<< HEAD
 # from animate_algorithms import Animate
+=======
+#from animate_algorithms import Animate
+>>>>>>> ed5aaaf7f35cd7c104d6c9c04304cbce88656232
 
 # Baseline algorithm: Random
 # ============================================================================================
@@ -89,5 +93,6 @@ if __name__ == "__main__":
             rushhour.give_output(file, field_names, dict)
             print("Won in", rushhour.get_moves(file), "moves")
             print("And with", comm, "commands")
+            from animate_algorithms import Animate
             break
 

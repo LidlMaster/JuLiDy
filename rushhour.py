@@ -1,6 +1,7 @@
 from car import Car
 from board import Board
 import csv
+import pandas as pd
 from typing import List, TypeVar, Dict, Any
 
 Self = TypeVar("Self", bound="Rushhour")
@@ -62,6 +63,19 @@ class Rushhour:
         # Returns
         return file
 
+    def get_moves(self, file: str) -> int:
+        """Gets the number of moves from the output file.
+        post: number_moves is an int"""
+        # Based on https://www.geeksforgeeks.org/how-to-count-the-number-of-lines-in-a-csv-file-in-python/
+        # Get the csv file of the results
+        output_file: List[str]
+        output_file = pd.read_csv(file)
+
+        # Count number of moves
+        number_moves: int
+        number_moves = len(output_file)
+        return number_moves
+
     def make_dict(self) -> List[Dict[str, int]]:
         """Makes an empty list
         post: dict is an empty list.
@@ -75,19 +89,29 @@ class Rushhour:
         post: dict is a list of dictionaries"""
 
         # Save the info of the command
+        autoID: str
+        autoID = ''
+        for i in range(len(command)):
+            if command[i] == ' ':
+                break
+            else: 
+                autoID = autoID + command[i]
+       
+        # Isolates and saves input string moving-distance into variable and convert into integer
         for i in range(len(command)):
                 # Accounts for double digit numbers
                 if command[i] == '-':
-                    move = int(command[i+1])
-                    move = int(move) * -1 
+                    move: int
+                    # print("command:",command)
+                    move = int(command[i + 1])
+                    move = int(move) * -1   
                     break
                 elif command[i].isdigit():
                     move = int(command[i])
-                    break
 
         # Saves info in a dictionary to add to dict
         dictionary: Dict[str, Any]
-        dictionary = {'car': command[0], 'move': move}
+        dictionary = {'car': autoID, 'move': move}
         dict.append(dictionary)
 
         return dict
@@ -106,7 +130,7 @@ class Rushhour:
 
         return self.board
     
-    def move_cars(self, command: str, dict: List[Dict[str, int]]) -> None:
+    def move_cars(self, command: str, dict: List[Dict[str, int]], mode: str) -> None:
         """ Reads input commands to select car object and move it the input ammount of spaces. 
         Takes oriëntation of car object into consideration for direction of movement. Cars can only move forward or backwards not sideways."""
         # Isolates and saves carID from input string into variable
@@ -163,8 +187,9 @@ class Rushhour:
                         dict = self.update_dict(dict, command)
 
                     # Print the board
-                    # print(self.board)
-                    # print("\n")
+                    if mode == "H" or mode == 'h':
+                        print(self.board)
+                        print("\n")
     
     def is_valid(self, command: str, car: Car, autoID: str) -> bool:
         """ Checks if input move is valid """

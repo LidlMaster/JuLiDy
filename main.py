@@ -80,6 +80,7 @@ if __name__ == "__main__":
 
         # Uses input command to move selected vehicle
         rushhour.move_cars(command, dict)
+        # print(rushhour.board.board)
 
         # Checks if game is solved and ends game
         if rushhour.is_solved():

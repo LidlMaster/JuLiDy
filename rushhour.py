@@ -3,6 +3,7 @@ from board import Board
 import csv
 import pandas as pd
 from typing import List, TypeVar, Dict, Any
+from copy import deepcopy
 
 Self = TypeVar("Self", bound="Rushhour")
 
@@ -134,6 +135,7 @@ class Rushhour:
         """ Reads input commands to select car object and move it the input ammount of spaces. 
         Takes oriëntation of car object into consideration for direction of movement. Cars can only move forward or backwards not sideways."""
         # Isolates and saves carID from input string into variable
+        oudboard = deepcopy(self.board)
         autoID: str
         autoID = ''
         for i in range(len(command)):
@@ -186,10 +188,12 @@ class Rushhour:
                         # Update list of dicts
                         dict = self.update_dict(dict, command)
 
+                    nieuwboard = self.board
                     # Print the board
                     if mode == "H" or mode == 'h':
-                        print(self.board)
-                        print("\n")
+                        print(oudboard)
+                        print(nieuwboard)
+                        print("")
     
     def is_valid(self, command: str, car: Car, autoID: str) -> bool:
         """ Checks if input move is valid """

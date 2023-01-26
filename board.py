@@ -1,5 +1,5 @@
 import numpy as np # type: ignore
-from typing import Any
+from typing import Any, List
 
 class Board:
     def __init__(self, size: int) -> None:

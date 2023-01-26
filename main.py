@@ -43,6 +43,7 @@ if __name__ == "__main__":
     file = 'output.csv'
 
     print(rushhour.place_cars())
+    print("")
     comm = 0
     
     # Start game

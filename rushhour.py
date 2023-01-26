@@ -3,6 +3,7 @@ from board import Board
 import csv
 import pandas as pd
 from typing import List, TypeVar, Dict, Any
+from copy import deepcopy
 
 Self = TypeVar("Self", bound="Rushhour")
 
@@ -190,7 +191,7 @@ class Rushhour:
                     # Print the board
                     if mode == "H" or mode == 'h':
                         print(self.board)
-                        print("\n")
+                        print("")
     
     def is_valid(self, command: str, car: Car, autoID: str) -> bool:
         """ Checks if input move is valid """
@@ -208,6 +209,8 @@ class Rushhour:
                 elif command[i].isdigit():
                     move = int(command[i])
                     break
+            if move == 0:
+                return False
             # Move car for cars with Horizontal orientation
             if car.orientation == 'H':
                 # Checks if input move is inside bounds grid
@@ -215,9 +218,15 @@ class Rushhour:
                     return False
                 if (self.board.board[car.row][car.column + move] == '__' or self.board.board[car.row][car.column + move] == autoID) and (self.board.board[car.row][car.column + move + 1] == '__' or self.board.board[car.row][car.column + move + 1] == autoID):
                     # Checks if there are no cars in between selected car and next location
-                    for i in range(move):
-                        if self.board.board[car.row][car.column + i + car.length] != '__' and self.board.board[car.row][car.column + i + car.length] != autoID:
-                            return False
+                    if move > 0:
+                        for i in range(move):
+                            if self.board.board[car.row][car.column + i + car.length] != '__' and self.board.board[car.row][car.column + i + car.length] != autoID:
+                                return False
+                    elif move < 0:
+                        for i in range(move - car.length, -1):
+                            if self.board.board[car.row][car.column + i + car.length] != '__' and self.board.board[car.row][car.column + i + car.length] != autoID:
+                                return False
+
                     return True
             # Move car for cars with Vertical orientation
             elif car.orientation == 'V':
@@ -227,9 +236,15 @@ class Rushhour:
                 # Checks if new location is empty or same carID
                 if (self.board.board[car.row + move][car.column] == '__' or self.board.board[car.row + move][car.column] == autoID) and (self.board.board[car.row + move + 1][car.column] == '__' or self.board.board[car.row + move + 1][car.column] == autoID):
                     # Checks if there are no cars in between selected car and next location
-                    for i in range(move):
-                        if self.board.board[car.row + i + car.length][car.column] != '__' and self.board.board[car.row + i + car.length][car.column] != autoID:
-                            return False
+                    if move > 0:
+                        for i in range(move):
+                            if self.board.board[car.row + i + car.length][car.column] != '__' and self.board.board[car.row + i + car.length][car.column] != autoID:
+                                return False
+                    elif move < 0:
+                        for i in range(move - car.length, -1):
+                            if self.board.board[car.row + i + car.length][car.column] != '__' and self.board.board[car.row + i + car.length][car.column] != autoID:
+                                return False
+
                     return True
             # Checks if orientation is invalid (not H or V)   
             else:

@@ -24,7 +24,8 @@ class Random:
         # options = [range(-5, 5, 1)]
         # random_move = random.choice(options)
 
-        options = [range(-(game.size - 1), (game.size - 1), 1)]
+
+        options = range(-(game.size - 1), game.size -1, 1)
         random_move = random.choice(options)
         
         return random_move

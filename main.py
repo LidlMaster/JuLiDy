@@ -67,8 +67,6 @@ if __name__ == "__main__":
                 break
 
         elif mode == "H":
-            for car in rushhour.cars:
-                print(car)
             # Promts User for move input
             command = input("Welke auto wil je waarheen bewegen?").upper()
             # Uses input command to move selected vehicle

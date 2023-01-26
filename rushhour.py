@@ -220,12 +220,10 @@ class Rushhour:
                     # Checks if there are no cars in between selected car and next location
                     if move > 0:
                         for i in range(move):
-                            print(car.column + i + car.length)
                             if self.board.board[car.row][car.column + i + car.length] != '__' and self.board.board[car.row][car.column + i + car.length] != autoID:
                                 return False
                     elif move < 0:
                         for i in range(move - car.length, -1):
-                            print(car.column + i + car.length)
                             if self.board.board[car.row][car.column + i + car.length] != '__' and self.board.board[car.row][car.column + i + car.length] != autoID:
                                 return False
 
@@ -240,12 +238,10 @@ class Rushhour:
                     # Checks if there are no cars in between selected car and next location
                     if move > 0:
                         for i in range(move):
-                            print(car.row + i + car.length)
                             if self.board.board[car.row + i + car.length][car.column] != '__' and self.board.board[car.row + i + car.length][car.column] != autoID:
                                 return False
                     elif move < 0:
                         for i in range(move - car.length, -1):
-                            print(car.row + i + car.length)
                             if self.board.board[car.row + i + car.length][car.column] != '__' and self.board.board[car.row + i + car.length][car.column] != autoID:
                                 return False
 

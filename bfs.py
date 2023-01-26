@@ -35,28 +35,26 @@
 
 from queue import Queue
 from rushhour import Rushhour
+from board import Board
 
-class BFS:
-        # Constructor
-    def __init__(self, num_of_nodes, directed=True):
-        rushhour = Rushhour()
-        self.queue = []
-        self.visited = []
-                
-    def breadth_first_search(self):
-            initial_state = rushhour.board.get_board_state()
-            queue = self.queue
-            visited = self.visited
-            queue.append(initial_state)
-            while queue:
-                current_state = queue.pop(0)
-                if self.board.is_solution(current_state):
-                    return current_state
-                for next_state in self.board.chart_moves(current_state):
-                    if next_state not in visited:
-                        queue.append(next_state)
-                        visited.append(next_state)
-            return None
+
+def breadth_first_search(self, game):        
+    queue = []
+    visited = set()
+            
+
+    initial_state = game.board.get_board_state()
+
+    queue.append(initial_state)
+    while queue:
+        current_state = queue.pop(0)
+        if self.board.is_solution(current_state):
+            return current_state
+        for next_state in self.board.chart_moves(current_state):
+            if next_state not in visited:
+                queue.append(next_state)
+                visited.append(next_state)
+    return None
 
 
 

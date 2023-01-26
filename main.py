@@ -44,7 +44,7 @@ if __name__ == "__main__":
     comm = 0
     
     # Start game
-    while True:
+    while is_solved() is False:
         if mode == "R":
             # Prompt input from user or algorithm 
             vehicle = algorithm.random_selection(rushhour.cars)

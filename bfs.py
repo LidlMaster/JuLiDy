@@ -23,12 +23,31 @@
 from queue import Queue
 from rushhour import Rushhour
 from board import Board
+from copy import deepcopy
 
 
 def breadth_first_search(self, game):        
     queue = []
     visited = set()
-            
+    current_state = deepcopy(game.board)
+    queue.append(current_state, None)
+    visited.add(current_state)
+
+    move = list(range(game.size))
+
+
+    for move in moves:
+        if move.is_valid():
+            new_state = game.board(move)
+                
+        if new_state not in visited:
+                current_state = deepcopy(new_state)
+                queue.append(current_state, move)
+                visited.add(current_state)
+
+
+        
+
 
     initial_state = game.board.get_board_state()
 

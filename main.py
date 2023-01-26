@@ -67,8 +67,8 @@ if __name__ == "__main__":
                 # from animate_algorithms import Animate
                 break
 
-        
         elif mode == "H":
+
             command = input("Welke auto wil je waarheen bewegen?").upper()
             # Uses input command to move selected vehicle
             rushhour.move_cars(command, dict, mode)
@@ -79,4 +79,3 @@ if __name__ == "__main__":
                 print("Won in", rushhour.get_moves(file), "moves")
                 print("And with", comm, "commands")
                 break
-

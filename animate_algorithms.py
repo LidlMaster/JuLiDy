@@ -287,11 +287,11 @@ interval = 1 / len(direction_x)
 rushHour = FuncAnimation(fig, animate, frames = len(direction_x), interval = interval,
                          init_func = init, repeat = False)
 
-# # Based on https://holypython.com/how-to-save-matplotlib-animations-the-ultimate-guide/
-# # Save animation as an gif-file
-# f = r"c://Users/judit/Documents/Algoritmen_Heuristieken/JuLiDy/animation_random.gif" 
-# writergif = animation.PillowWriter(fps = 2) 
-# rushHour.save(f, writer = writergif)
+# Based on https://holypython.com/how-to-save-matplotlib-animations-the-ultimate-guide/
+# Save animation as an gif-file
+f = r"c://Users/judit/Documents/Algoritmen_Heuristieken/JuLiDy/animation_12.gif" 
+writergif = animation.PillowWriter(fps = 20) 
+rushHour.save(f, writer = writergif)
 
 # Show the animation
 plt.show()

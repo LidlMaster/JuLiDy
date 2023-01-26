@@ -34,7 +34,6 @@ if __name__ == "__main__":
     algorithm = Random()
 
 
-
     # Create list of moves
     dict = rushhour.make_dict()
     field_names = rushhour.make_field_names()

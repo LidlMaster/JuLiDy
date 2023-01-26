@@ -38,23 +38,49 @@ from rushhour import Rushhour
 from board import Board
 
 
-def breadth_first_search(self, game):        
+def breadth_first_search(game):        
     queue = []
     visited = set()
             
 
-    initial_state = game.board.get_board_state()
+    current_state = game.board
+    queue.append(current_state)
+    visited.add(current_state)
+    print(game.size)
 
-    queue.append(initial_state)
-    while queue:
-        current_state = queue.pop(0)
-        if self.board.is_solution(current_state):
-            return current_state
-        for next_state in self.board.chart_moves(current_state):
-            if next_state not in visited:
-                queue.append(next_state)
-                visited.append(next_state)
-    return None
+    # for move in moves:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # while queue:
+    #     current_state = queue.pop(0)
+    #     if game.board.is_solution(current_state):
+    #         return current_state
+    #     for next_state in .board.chart_moves(current_state):
+    #         if next_state not in visited:
+    #             queue.append(next_state)
+    #             visited.append(next_state)
+    # return None
 
 
 

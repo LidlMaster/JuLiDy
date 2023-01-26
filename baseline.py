@@ -1,6 +1,7 @@
 import random
 from typing import Dict
 # import main
+from rushhour import Rushhour
 
 class Random:
     def random_selection(self, dictionary: Dict):
@@ -13,7 +14,7 @@ class Random:
             # id = random_vehicle.car_id
             return random_vehicle
 
-    def random_movement(self):
+    def random_movement(self, game):
         """
         Randomly choose distance to move.
         """
@@ -23,23 +24,11 @@ class Random:
         # options = [range(-5, 5, 1)]
         # random_move = random.choice(options)
 
-        # options = [range(-(len(main.board.board)+ 1, len(main.board.board)-1, 1))]
-        # random_move = random.choice(options)
+        options = [range(-(game.size - 1), game.size, 1)]
+        random_move = random.choice(options)
+        
         return random_move
 
     def make_move(self, vehicle, move):
         return f"{vehicle} {move}"
-# ============================================================================================
-
-
-# if __name__ == "__main__":
-#     algorithm = Random()
-
-#     i = 0
-#     while i < 3:
-#         commands = algorithm.make_move(algorithm.random_selection(), algorithm.random_movement())
-#         i += 1
-
-#     print(commands)
-
     

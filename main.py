@@ -49,7 +49,7 @@ if __name__ == "__main__":
             # Prompt input from user or algorithm 
             vehicle = algorithm.random_selection(rushhour.cars)
             # print("v:",vehicle)
-            afstand = algorithm.random_movement()
+            afstand = algorithm.random_movement(rushhour)
             # print("a:",afstand)
             command = algorithm.make_move(vehicle, afstand)
             comm += 1
@@ -84,4 +84,3 @@ if __name__ == "__main__":
                 print("Won in", rushhour.get_moves(file), "moves")
                 print("And with", comm, "commands")
                 break
-            

@@ -2,12 +2,11 @@ from rushhour import Rushhour
 from board import Board
 from baseline import Random
 import random
+from sys import argv
+from bfs import breadth_first_search
 
 
 if __name__ == "__main__":
-
-    from sys import argv
-
     # Check command line arguments and respond with usage in case of wrong input
     if len(argv) not in [2, 3]:
         print("Usage: python rushhour.py <Size>x<Size>_boardnumber")
@@ -30,12 +29,11 @@ if __name__ == "__main__":
         size = size * 10
         size += int(game_name[1])
 
-    # Create board
-    # board = Board(size)
-
     # Create game
     rushhour = Rushhour(game_name, size)
     algorithm = Random()
+
+
 
     # Create list of moves
     dict = rushhour.make_dict()
@@ -69,7 +67,7 @@ if __name__ == "__main__":
                 break
 
         elif mode == "H":
-
+            # Promts User for move input
             command = input("Welke auto wil je waarheen bewegen?").upper()
             # Uses input command to move selected vehicle
             rushhour.move_cars(command, dict, mode)
@@ -80,3 +78,11 @@ if __name__ == "__main__":
                 print("Won in", rushhour.get_moves(file), "moves")
                 print("And with", comm, "commands")
                 break
+        elif mode == "B":
+            breadth_first_search(rushhour)
+            if rushhour.is_solved():
+                rushhour.give_output(file, field_names, dict)
+                print("Won in", rushhour.get_moves(file), "moves")
+                print("And with", comm, "commands")
+                break
+            

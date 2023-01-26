@@ -15,6 +15,7 @@ class Rushhour:
         self.load_cars(f"gameboards/Rushhour{game}.csv")
         self.board: Board
         self.board = Board(size)
+        self.size = size
 
 
     def load_cars(self, filename: str) -> None:

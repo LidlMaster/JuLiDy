@@ -1,16 +1,3 @@
-# Breadth_First_Serach( Graph, X ) // Here, Graph is the graph that we already have and X is the source node
-
-# Let Q be the queue
-# Q.enqueue( X ) // Inserting source node X into the queue
-# Mark X node as visited.
-
-# While ( Q is not empty )
-# Y = Q.dequeue( ) // Removing the front node from the queue
-
-# Process all the neighbors of Y, For all the neighbors Z of Y
-# If Z is not visited, Q. enqueue( Z ) // Stores Z in Q
-# Mark Z as visited
-
 # Follow the below method to implement BFS traversal.
 
 # Declare a queue and insert the starting vertex.

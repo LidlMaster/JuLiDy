@@ -25,30 +25,54 @@ from rushhour import Rushhour
 from board import Board
 from copy import deepcopy
 
-
 def breadth_first_search(game):        
     queue = []
     visited = set()
-    current_state = deepcopy(game.board)
-    queue.append(current_state)
-    visited.add(current_state)
 
     while len(queue) > 0:
-        states = queue.pop(0)
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        game = queue.pop(0)
+
         if game.is_solved():
             return True
+        
         else:
-            moves = list(range(-(game.size - 1), game.size -1, 1))
+            moves = list(range(-game.size+1, game.size))
             exclude_zero = {0}
             moves = list(num for num in moves if num not in exclude_zero)
 
-            for car in game.cars: 
-                temp_car = car             
+            for car in game.cars:    
+                temp_car = deepcopy(game.cars[car])       
                 for move in moves:
-                    command = f"{temp_car} {move}"
-                    if game.is_valid(command, car, car):
-                        # temp_car = game.move_car(move)
-                        print(temp_car)
+                    command = f"{temp_car.car_id} {move}"
+                    if game.is_valid(command, temp_car, temp_car.car_id):
+ 
+                        temp_game = deepcopy(game) 
+                        temp_game.move_cars(command, "B") 
+                        print(len(visited))
+                        print(len(queue))   
+                        
+                        _str = str(temp_game.board)
+                        if _str not in visited:
+                            print("123")
+                            print(len(visited))
+                            print(len(queue))
+                            visited.add(_str)
+                            queue.append(temp_game)
+
+    return False
+
+                        # # remove car from current position
+                        # game.board[temp_car.row][temp_car.column] = '__'
+                        # # update car position
+                        # temp_car.row += move
+                        # temp_car.column += move
+                        # # add car to new position
+                        # game.board[temp_car.row][temp_car.column] = temp_car.car_id
+
+                        
+
+
 
                         
     #             if new_state not in visited:

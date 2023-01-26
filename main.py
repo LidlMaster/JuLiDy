@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
 
     # Create list of moves
-    dict = rushhour.make_dict()
+    dict = rushhour.dict
     field_names = rushhour.make_field_names()
     file = 'output.csv'
 
@@ -56,7 +56,7 @@ if __name__ == "__main__":
             comm += 1
 
             # Uses input command to move selected vehicle
-            rushhour.move_cars(command, dict, mode)
+            rushhour.move_cars(command, mode)
 
             # Checks if game is solved and ends game
             if rushhour.is_solved():
@@ -70,7 +70,7 @@ if __name__ == "__main__":
             # Promts User for move input
             command = input("Welke auto wil je waarheen bewegen?").upper()
             # Uses input command to move selected vehicle
-            rushhour.move_cars(command, dict, mode)
+            rushhour.move_cars(command, mode)
 
             # Checks if game is solved and ends game
             if rushhour.is_solved():

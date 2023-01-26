@@ -34,17 +34,18 @@ if __name__ == "__main__":
     algorithm = Random()
 
 
+
     # Create list of moves
     dict = rushhour.make_dict()
     field_names = rushhour.make_field_names()
     file = 'output.csv'
 
     print(rushhour.place_cars())
-    print("")
     comm = 0
     
     # Start game
     while True:
+        # while comm < 150:
         if mode == "R":
             # Prompt input from user or algorithm 
             vehicle = algorithm.random_selection(rushhour.cars)

@@ -23,19 +23,49 @@
 from queue import Queue
 from rushhour import Rushhour
 from board import Board
+from copy import deepcopy
 
 
 def breadth_first_search(game):        
     queue = []
     visited = set()
-            
-
-    current_state = game.board
+    current_state = deepcopy(game.board)
     queue.append(current_state)
     visited.add(current_state)
-    print(game.size)
 
-    # for move in moves:
+    while len(queue) > 0:
+        states = queue.pop(0)
+        if game.is_solved():
+            return True
+        else:
+            moves = list(range(-(game.size - 1), game.size -1, 1))
+            exclude_zero = {0}
+            moves = list(num for num in moves if num not in exclude_zero)
+
+            for car in game.cars: 
+                temp_car = car             
+                for move in moves:
+                    command = f"{temp_car} {move}"
+                    if game.is_valid(command, car, car):
+                        # temp_car = game.move_car(move)
+                        print(temp_car)
+
+                        
+    #             if new_state not in visited:
+    #                     current_state = deepcopy(new_state)
+    #                     queue.append(current_state, move)
+    #                     visited.add(current_state)
+
+
+                
+
+
+    #         current_state = game.board
+    #         queue.append(current_state)
+    #         visited.add(current_state)
+    #         print(game.size)
+
+    #         # for move in moves:
 
 
 
@@ -59,15 +89,15 @@ def breadth_first_search(game):
 
 
 
-    # while queue:
-    #     current_state = queue.pop(0)
-    #     if game.board.is_solution(current_state):
-    #         return current_state
-    #     for next_state in .board.chart_moves(current_state):
-    #         if next_state not in visited:
-    #             queue.append(next_state)
-    #             visited.append(next_state)
-    # return None
+    # # while queue:
+    # #     current_state = queue.pop(0)
+    # #     if game.board.is_solution(current_state):
+    # #         return current_state
+    # #     for next_state in .board.chart_moves(current_state):
+    # #         if next_state not in visited:
+    # #             queue.append(next_state)
+    # #             visited.append(next_state)
+    # # return None
 
 
 

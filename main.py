@@ -38,7 +38,7 @@ if __name__ == "__main__":
     dict = rushhour.dict
     field_names = rushhour.make_field_names()
     file = 'output.csv'
-    print(rushhour.place_cars())
+
     comm = 0
 
     # Start game
@@ -92,5 +92,5 @@ if __name__ == "__main__":
             print(rushhour.place_cars())
             depth_first_search(rushhour)
         else:
-            print("invalid mode, valid modes are H, R, or B.")   
+            print("invalid mode, valid modes are H, R, E, B or D.")   
             break         

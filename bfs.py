@@ -28,53 +28,67 @@ from copy import deepcopy
 def breadth_first_search(game):        
     queue = []
     visited = set()
+    queue.append(game)
+    visited.add(game)
 
     while len(queue) > 0:
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-        game = queue.pop(0)
+        # print("begin")
+        current_state = queue.pop(0)
+        if current_state.is_solved():
+            print("Solved!")
+            exit(1)
 
-        if game.is_solved():
-            return True
+        print(current_state.board)
+        print(" ")
         
-        else:
-            moves = list(range(-game.size+1, game.size))
-            exclude_zero = {0}
-            moves = list(num for num in moves if num not in exclude_zero)
+        moves = list(range(-game.size+1, game.size))
+        exclude_zero = {0}
+        moves = list(num for num in moves if num not in exclude_zero)
 
-            for car in game.cars:    
-                temp_car = deepcopy(game.cars[car])       
-                for move in moves:
-                    command = f"{temp_car.car_id} {move}"
-                    if game.is_valid(command, temp_car, temp_car.car_id):
- 
-                        temp_game = deepcopy(game) 
-                        temp_game.move_cars(command, "B") 
-                        print(len(visited))
-                        print(len(queue))   
+        for car in current_state.cars:    
+            temp_car = deepcopy(current_state.cars[car])       
+            for move in moves:
+                command = f"{temp_car.car_id} {move}"
+                if current_state.is_valid(command, temp_car, temp_car.car_id):
+
+                    temp_game = deepcopy(current_state) 
+                    temp_game.move_cars(command, "B") 
+                    # print(len(visited))
+                    # print(len(queue))   
+                    
+                    _str = str(temp_game.board)
+                    if _str not in visited:
+                        # print("123")
+                        # print(len(visited))
+                        # print(len(queue))
+                        visited.add(_str)
+                        queue.append(temp_game)
                         
-                        _str = str(temp_game.board)
-                        if _str not in visited:
-                            print("123")
-                            print(len(visited))
-                            print(len(queue))
-                            visited.add(_str)
-                            queue.append(temp_game)
+        # print(queue)
 
     return False
 
-                        # # remove car from current position
-                        # game.board[temp_car.row][temp_car.column] = '__'
-                        # # update car position
-                        # temp_car.row += move
-                        # temp_car.column += move
-                        # # add car to new position
-                        # game.board[temp_car.row][temp_car.column] = temp_car.car_id
+            # # remove car from current position
+            # game.board[temp_car.row][temp_car.column] = '__'
+            # # update car position
+            # temp_car.row += move
+            # temp_car.column += move
+            # # add car to new position
+            # game.board[temp_car.row][temp_car.column] = temp_car.car_id
 
                         
+# def is_solved(current_state) -> bool:
+#     """Checks if case is solved (checks if red car is in position) """
+#     # This is inspired by the is_won function of schuifpuzzel.py
+#     # Go through all cars
+#     for i in range (len(current_state.cars)):
+#         # Get the row of the red car and save it in a variable
+#         row_x: int
+#         row_x = int(current_state.cars['X'].row)
+#         if current_state.board.board[row_x][-2] == "X" and current_state.board.board[row_x][-1] == "X":
+#             return True
 
-
-
-                        
+                      
     #             if new_state not in visited:
     #                     current_state = deepcopy(new_state)
     #                     queue.append(current_state, move)

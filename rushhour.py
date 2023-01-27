@@ -17,6 +17,7 @@ class Rushhour:
         self.board: Board
         self.board = Board(size)
         self.size = size
+        self.dict = []
 
 
     def load_cars(self, filename: str) -> None:
@@ -39,7 +40,7 @@ class Rushhour:
         field_names = ['car', 'move']
         return field_names
 
-    def give_output(self, file: str, field_names: List[str], dict: List[Dict[str, int]]) -> None:
+    def give_output(self, file: str, field_names: List[str]) -> None:
         """ Creates a csv file of the output dict, if asked.
         pre: file is a string, field_names is a list and dict is a list of dictionaries.
         post: a csv file of the given name
@@ -51,7 +52,7 @@ class Rushhour:
             with open(file, 'w') as csvfile:
                 writer = csv.DictWriter(csvfile, fieldnames = field_names)
                 writer.writeheader()
-                writer.writerows(dict)
+                writer.writerows(self.dict)
 
     def want_output(self) -> str:
         """Asks the filename.
@@ -78,15 +79,8 @@ class Rushhour:
         number_moves = len(output_file)
         return number_moves
 
-    def make_dict(self) -> List[Dict[str, int]]:
-        """Makes an empty list
-        post: dict is an empty list.
-        """
-        dict: List[Dict[str, int]]
-        dict = []
-        return dict
 
-    def update_dict(self, dict: List[Dict[str, int]], command: str) -> List[Dict[str, int]]:
+    def update_dict(self, command: str) -> List[Dict[str, int]]:
         """Updates the dict with the command
         post: dict is a list of dictionaries"""
 
@@ -114,9 +108,9 @@ class Rushhour:
         # Saves info in a dictionary to add to dict
         dictionary: Dict[str, Any]
         dictionary = {'car': autoID, 'move': move}
-        dict.append(dictionary)
+        self.dict.append(dictionary)
 
-        return dict
+        return self.dict
     
     def place_cars(self) -> Board:
         """ Place cars in constructed grid using coördinates and length from the cars dictionary """
@@ -132,7 +126,7 @@ class Rushhour:
 
         return self.board
     
-    def move_cars(self, command: str, dict: List[Dict[str, int]], mode: str) -> None:
+    def move_cars(self, command: str, mode: str) -> None:
         """ Reads input commands to select car object and move it the input ammount of spaces. 
         Takes oriëntation of car object into consideration for direction of movement. Cars can only move forward or backwards not sideways."""
         # Isolates and saves carID from input string into variable
@@ -174,7 +168,7 @@ class Rushhour:
                         for i in range(self.cars[car].column, self.cars[car].column + self.cars[car].length):
                             self.board.board[self.cars[car].row][i] = self.cars[car].car_id
                         # Update list of dicts
-                        dict = self.update_dict(dict, command)
+                        self.dict = self.update_dict(command)
                             
                     else:
                         # Moves cars with Vertical orientation
@@ -186,7 +180,7 @@ class Rushhour:
                         for i in range(self.cars[car].row, self.cars[car].row + self.cars[car].length):
                             self.board.board[i][self.cars[car].column] = self.cars[car].car_id
                         # Update list of dicts
-                        dict = self.update_dict(dict, command)
+                        self.dict = self.update_dict(command)
 
                     # Print the board
                     if mode == "H" or mode == 'h':

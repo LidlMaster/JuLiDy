@@ -28,18 +28,20 @@ from copy import deepcopy
 def breadth_first_search(game):        
     queue = []
     visited = set()
+    history = []
     queue.append(game)
     visited.add(game)
+    i = 0
 
     while len(queue) > 0:
-        # print("begin")
         current_state = queue.pop(0)
+        i += 1
         if current_state.is_solved():
             print("Solved!")
+            print(current_state.board)
+            print("History of moves: ", history)
+            print("#moves: ", len(history))
             exit(1)
-
-        print(current_state.board)
-        print(" ")
         
         moves = list(range(-game.size+1, game.size))
         exclude_zero = {0}
@@ -53,57 +55,19 @@ def breadth_first_search(game):
 
                     temp_game = deepcopy(current_state) 
                     temp_game.move_cars(command, "B") 
-                    # print(len(visited))
-                    # print(len(queue))   
                     
                     _str = str(temp_game.board)
                     if _str not in visited:
-                        # print("123")
-                        # print(len(visited))
-                        # print(len(queue))
                         visited.add(_str)
                         queue.append(temp_game)
+                        history.append(command + history[i])
                         
         # print(queue)
 
     return False
 
-            # # remove car from current position
-            # game.board[temp_car.row][temp_car.column] = '__'
-            # # update car position
-            # temp_car.row += move
-            # temp_car.column += move
-            # # add car to new position
-            # game.board[temp_car.row][temp_car.column] = temp_car.car_id
-
-                        
-# def is_solved(current_state) -> bool:
-#     """Checks if case is solved (checks if red car is in position) """
-#     # This is inspired by the is_won function of schuifpuzzel.py
-#     # Go through all cars
-#     for i in range (len(current_state.cars)):
-#         # Get the row of the red car and save it in a variable
-#         row_x: int
-#         row_x = int(current_state.cars['X'].row)
-#         if current_state.board.board[row_x][-2] == "X" and current_state.board.board[row_x][-1] == "X":
-#             return True
-
-                      
-    #             if new_state not in visited:
-    #                     current_state = deepcopy(new_state)
-    #                     queue.append(current_state, move)
-    #                     visited.add(current_state)
-
-
                 
 
-
-    #         current_state = game.board
-    #         queue.append(current_state)
-    #         visited.add(current_state)
-    #         print(game.size)
-
-    #         # for move in moves:
 
 
 

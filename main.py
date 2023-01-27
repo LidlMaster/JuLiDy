@@ -37,18 +37,15 @@ if __name__ == "__main__":
     elif mode == "E":
         algorithm = Efficient_Random()
 
-
-
     # Create list of moves
     dict = rushhour.dict
     field_names = rushhour.make_field_names()
     file = 'output.csv'
     comm = 0
-    
-    
+       
     # Start game
     while True:              
-        if mode == "R" or mode == "E":
+        if mode == "R":
             if comm == 0:
                 print(rushhour.place_cars())
             # Prompt input from user or algorithm 
@@ -67,6 +64,37 @@ if __name__ == "__main__":
                 print("And with", comm, "commands")
                 # from animate_algorithms import Animate
                 break      
+        elif mode == "E":
+            if comm == 0:
+                print(rushhour.place_cars())
+            # Start a while loop, to keep the number of moves under a given number
+            while not rushhour.is_solved(): 
+                # Prompt input from user or algorithm 
+                vehicle = algorithm.random_selection(rushhour.cars)
+                # print("v:",vehicle)
+                afstand = algorithm.random_movement(rushhour)
+                # print("a:",afstand)
+                command = algorithm.make_move(vehicle, afstand)
+                comm += 1
+
+                # Uses input command to move selected vehicle
+                rushhour.move_cars(command, mode)
+
+                # Checks if game is solved and ends game
+                if rushhour.is_solved():
+                    rushhour.give_output(file, field_names)
+                    print("Won in", rushhour.get_moves(file), "moves")
+                    print("And with", comm, "commands")
+                    # from animate_algorithms import Animate
+                    break
+                # Reset if number of moves is bigger than the cap
+                elif len(dict) >= 10000:
+                    rushhour = Rushhour(game_name, size)
+                    algorithm = Random()
+                    dict = rushhour.dict
+                    rushhour.place_cars()
+                    comm = 0
+            break
         elif mode == "H":
             if comm == 0:
                 print(rushhour.place_cars())
@@ -91,7 +119,6 @@ if __name__ == "__main__":
                 print(rushhour.place_cars())
                 comm += 1
             depth_first_search(rushhour)
-        
         else:
             print("invalid mode, valid modes are H, R, or B.")   
             break         

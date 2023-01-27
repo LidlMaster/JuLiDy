@@ -1,7 +1,7 @@
 from rushhour import Rushhour
 from board import Board
 from baseline import Random
-import random
+from er import Efficient_Random
 from sys import argv
 from bfs import breadth_first_search
 from dfs import depth_first_search
@@ -32,7 +32,10 @@ if __name__ == "__main__":
 
     # Create game
     rushhour = Rushhour(game_name, size)
-    algorithm = Random()
+    if mode == "R":
+        algorithm = Random()
+    elif mode == "E":
+        algorithm = Efficient_Random()
 
 
 
@@ -40,20 +43,17 @@ if __name__ == "__main__":
     dict = rushhour.dict
     field_names = rushhour.make_field_names()
     file = 'output.csv'
-
+    comm = 0
+    
     
     # Start game
-    while True:
-        # while comm < 150:
-        
-        comm = 0
-        if mode == "R":
-            print(rushhour.place_cars())
+    while True:              
+        if mode == "R" or mode == "E":
+            if comm == 0:
+                print(rushhour.place_cars())
             # Prompt input from user or algorithm 
             vehicle = algorithm.random_selection(rushhour.cars)
-            # print("v:",vehicle)
             afstand = algorithm.random_movement(rushhour)
-            # print("a:",afstand)
             command = algorithm.make_move(vehicle, afstand)
             comm += 1
 
@@ -66,10 +66,11 @@ if __name__ == "__main__":
                 print("Won in", rushhour.get_moves(file), "moves")
                 print("And with", comm, "commands")
                 # from animate_algorithms import Animate
-                break
-
+                break      
         elif mode == "H":
-            print(rushhour.place_cars())
+            if comm == 0:
+                print(rushhour.place_cars())
+                comm += 1
             # Promts User for move input
             command = input("Welke auto wil je waarheen bewegen?").upper()
             # Uses input command to move selected vehicle
@@ -79,13 +80,16 @@ if __name__ == "__main__":
             if rushhour.is_solved():
                 rushhour.give_output(file, field_names)
                 print("Won in", rushhour.get_moves(file), "moves")
-                print("And with", comm, "commands")
                 break
         elif mode == "B":
-            print(rushhour.place_cars())
+            if comm == 0:
+                print(rushhour.place_cars())
+                comm += 1
             breadth_first_search(rushhour)
         elif mode == "D":
-            print(rushhour.place_cars())
+            if comm == 0:
+                print(rushhour.place_cars())
+                comm += 1
             depth_first_search(rushhour)
         
         else:

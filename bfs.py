@@ -26,23 +26,21 @@ from board import Board
 from copy import deepcopy
 
 def breadth_first_search(game):        
-    queue = []
+    queue = [game]
+    history = [[]]
     visited = set()
-    queue.append(game)
-    visited.add(game)
-
+    visited.add(str(game.board))
     while len(queue) > 0:
-        # print("begin")
         current_state = queue.pop(0)
+        current_history = history.pop(0)
         if current_state.is_solved():
             print("Solved!")
             print(current_state.board)
+            print(current_history[:len(current_history)])
+            print(len(current_history))
             exit(1)
 
-        print(current_state.board)
-        print(" ")
-        
-        moves = list(range(-game.size+1, game.size))
+        moves = list(range(-(game.size - 1), game.size -1, 1))
         exclude_zero = {0}
         moves = list(num for num in moves if num not in exclude_zero)
 
@@ -51,23 +49,17 @@ def breadth_first_search(game):
             for move in moves:
                 command = f"{temp_car.car_id} {move}"
                 if current_state.is_valid(command, temp_car, temp_car.car_id):
-
                     temp_game = deepcopy(current_state) 
                     temp_game.move_cars(command, "B") 
-                    # print(len(visited))
-                    # print(len(queue))   
-                    
                     _str = str(temp_game.board)
                     if _str not in visited:
-                        # print("123")
-                        # print(len(visited))
-                        # print(len(queue))
                         visited.add(_str)
                         queue.append(temp_game)
-                        
-        # print(queue)
+                        history.append(current_history + [command])
 
     return False
+
+def lijstmaakt():
 
             # # remove car from current position
             # game.board[temp_car.row][temp_car.column] = '__'

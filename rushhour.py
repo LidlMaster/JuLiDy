@@ -45,7 +45,6 @@ class Rushhour:
         pre: file is a string, field_names is a list and dict is a list of dictionaries.
         post: a csv file of the given name
         """
-        print("Dict wordt gemaakt")
         # Check if na,me for file is given
         if file != 'n':
             # Code from https://www.geeksforgeeks.org/how-to-save-a-python-dictionary-to-a-csv-file/
@@ -87,7 +86,6 @@ class Rushhour:
                 # Accounts for double digit numbers
                 if command[i] == '-':
                     move: int
-                    # print("command:",command)
                     move = int(command[i + 1])
                     move = int(move) * -1   
                     break
@@ -132,7 +130,6 @@ class Rushhour:
                 # Accounts for double digit numbers
                 if command[i] == '-':
                     move: int
-                    # print("command:",command)
                     move = int(command[i + 1])
                     move = int(move) * -1   
                     break

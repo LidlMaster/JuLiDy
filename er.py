@@ -2,7 +2,7 @@ import random
 from typing import Dict
 from rushhour import Rushhour
 
-class Random:
+class Efficient_Random:
     def random_selection(self, dictionary: Dict):
             """
             Randomly choose vehicle to move.
@@ -12,9 +12,9 @@ class Random:
 
     def random_movement(self, game):
         """
-        Randomly choose direction to move.
+        Randomly choose direction and distance to move.
         """
-        options = [-1,1]
+        options = range(-(game.size - 1), game.size -1, 1)
         random_move = random.choice(options)
         
         return random_move

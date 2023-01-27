@@ -9,5 +9,4 @@ class Car:
 
     def __repr__(self) -> str:
         return f"ID: {self.car_id}, Orientation: {self.orientation}, Column: {self.column}, Row: {self.row}, Length: {self.length}"
-        # self.car_id
  

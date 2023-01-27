@@ -36,6 +36,7 @@ def breadth_first_search(game):
         current_state = queue.pop(0)
         if current_state.is_solved():
             print("Solved!")
+            print(current_state.board)
             exit(1)
 
         print(current_state.board)

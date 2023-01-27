@@ -4,6 +4,7 @@ from baseline import Random
 from er import Efficient_Random
 from sys import argv
 from bfs import breadth_first_search
+from dfs import depth_first_search
 
 
 if __name__ == "__main__":

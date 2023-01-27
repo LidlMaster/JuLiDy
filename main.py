@@ -4,6 +4,7 @@ from baseline import Random
 import random
 from sys import argv
 from bfs import breadth_first_search
+from dfs import depth_first_search
 
 
 if __name__ == "__main__":
@@ -83,11 +84,9 @@ if __name__ == "__main__":
         elif mode == "B":
             print(rushhour.place_cars())
             breadth_first_search(rushhour)
-            if rushhour.is_solved():
-                rushhour.give_output(file, field_names)
-                print("Won in", rushhour.get_moves(file), "moves")
-                print("And with", comm, "commands")
-                break
+        elif mode == "D":
+            print(rushhour.place_cars())
+            depth_first_search(rushhour)
         
         else:
             print("invalid mode, valid modes are H, R, or B.")   

@@ -1,38 +1,17 @@
-# Follow the below method to implement BFS traversal.
-
-# Declare a queue and insert the starting vertex.
-# Initialize a visited array and mark the starting vertex as visited.
-# Follow the below process till the queue becomes empty:
-# Remove the first vertex of the queue.
-# Mark that vertex as visited.
-# Insert all the unvisited neighbors of the vertex into the queue.
-# https://www.geeksforgeeks.org/breadth-first-search-or-bfs-for-a-graph/
-
-
-# BFS pseudocode:
-# create a queue Q 
-# mark v as visited and put v into Q 
-# while Q is non-empty 
-#     remove the head u of Q 
-#     mark and enqueue all (unvisited) neighbours of u
-# https://www.programiz.com/dsa/graph-bfs
-
-#Judith Hellingman — vandaag om 11:00
-# https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/breadth-first-search-bfs-algorithm/
-
-from queue import Queue
+from queue import LifoQueue
 from rushhour import Rushhour
 from board import Board
 from copy import deepcopy
 
-def breadth_first_search(game):        
-    queue = [game]
+def depth_first_search(game):
+    stack = LifoQueue() # Use a stack instead of a queue
+    stack.put(game)
     history = [[]]
     visited = set()
     visited.add(str(game.board))
-    while len(queue) > 0:
-        current_state = queue.pop(0)
-        current_history = history.pop(0)
+    while not stack.empty():
+        current_state = stack.get() # Use the `get()` method instead of `pop(0)`
+        current_history = history.pop()
         if current_state.is_solved():
             print("Solved!")
             print(current_state.board)
@@ -54,9 +33,7 @@ def breadth_first_search(game):
                     _str = str(temp_game.board)
                     if _str not in visited:
                         visited.add(_str)
-                        queue.append(temp_game)
+                        stack.put(temp_game) # Use the `put()` method instead of `append()`
                         history.append(current_history + [command])
 
     return False
-
-# def lijstmaakt():

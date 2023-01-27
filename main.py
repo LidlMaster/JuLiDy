@@ -38,9 +38,9 @@ if __name__ == "__main__":
     dict = rushhour.dict
     field_names = rushhour.make_field_names()
     file = 'output.csv'
-
+    print(rushhour.place_cars())
     comm = 0
-    
+
     # Start game
     while True:
         if mode == "R":
@@ -65,7 +65,7 @@ if __name__ == "__main__":
                     # from animate_algorithms import Animate
                     break
                 # Reset if number of moves is bigger than the cap
-                elif len(dict) >= 1000:
+                elif len(dict) >= 10000:
                     rushhour = Rushhour(game_name, size)
                     algorithm = Random()
                     dict = rushhour.dict

@@ -4,7 +4,6 @@ from baseline import Random
 import random
 from sys import argv
 from bfs import breadth_first_search
-from dfs import depth_first_search
 
 
 if __name__ == "__main__":
@@ -41,14 +40,13 @@ if __name__ == "__main__":
     field_names = rushhour.make_field_names()
     file = 'output.csv'
 
+    print(rushhour.place_cars())
+    comm = 0
     
     # Start game
     while True:
         # while comm < 150:
-        
-        comm = 0
         if mode == "R":
-            print(rushhour.place_cars())
             # Prompt input from user or algorithm 
             vehicle = algorithm.random_selection(rushhour.cars)
             # print("v:",vehicle)
@@ -69,7 +67,6 @@ if __name__ == "__main__":
                 break
 
         elif mode == "H":
-            print(rushhour.place_cars())
             # Promts User for move input
             command = input("Welke auto wil je waarheen bewegen?").upper()
             # Uses input command to move selected vehicle
@@ -82,11 +79,12 @@ if __name__ == "__main__":
                 print("And with", comm, "commands")
                 break
         elif mode == "B":
-            print(rushhour.place_cars())
             breadth_first_search(rushhour)
-        elif mode == "D":
-            print(rushhour.place_cars())
-            depth_first_search(rushhour)
+            if rushhour.is_solved():
+                rushhour.give_output(file, field_names)
+                print("Won in", rushhour.get_moves(file), "moves")
+                print("And with", comm, "commands")
+                break
         
         else:
             print("invalid mode, valid modes are H, R, or B.")   

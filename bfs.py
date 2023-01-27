@@ -34,23 +34,31 @@ def breadth_first_search(game):
     visited.add(current_state)
 
     while len(queue) > 0:
-        states = queue.pop(0)
-        if game.is_solved():
+        current_state = queue.pop(0)
+        if is_solved(current_state):
             return True
         else:
             moves = list(range(-(game.size - 1), game.size -1, 1))
             exclude_zero = {0}
             moves = list(num for num in moves if num not in exclude_zero)
 
-            for car in game.cars: 
-                temp_car = car             
+            for car in current_state.cars: 
+                temp_car = current_state.car             
                 for move in moves:
                     command = f"{temp_car} {move}"
-                    if game.is_valid(command, car, car):
+                    if current_state.is_valid(command, temp_car, temp_car.car_id):
                         # temp_car = game.move_car(move)
                         print(temp_car)
 
-                        
+def is_solved(self, game) -> bool:
+    """Checks if case is solved (checks if red car is in position) """
+    # This is inspired by the is_won function of schuifpuzzel.py
+    # Go through all cars
+    for i in range (len(game.cars)):
+        # Get the row of the red car and save it in a variable
+        row_x: int
+        row_x = int(game.cars['X'].row)
+                      
     #             if new_state not in visited:
     #                     current_state = deepcopy(new_state)
     #                     queue.append(current_state, move)

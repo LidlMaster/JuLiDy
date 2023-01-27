@@ -25,25 +25,31 @@ from rushhour import Rushhour
 from board import Board
 from copy import deepcopy
 
-def breadth_first_search(game):        
-    queue = []
+def breadth_first_search(game):    
+    queue = [game]
+    history = [[]]
     visited = set()
-    history = []
-    queue.append(game)
-    visited.add(game)
-    i = 0
-
+    visited.add(str(game.board))
     while len(queue) > 0:
         current_state = queue.pop(0)
-        i += 1
+        current_history = history.pop(0)
         if current_state.is_solved():
             print("Solved!")
             print(current_state.board)
-            print("History of moves: ", history)
-            print("#moves: ", len(history))
+            print(current_history[:len(current_history)])
+            print(len(current_history))
+            
+            # Saving made moves in outputfile
+            fieldnames =game.make_field_names()
+            for command in current_history:
+                game.update_dict(command) 
+
+            game.give_output("output.csv", fieldnames)             
             exit(1)
-        
-        moves = list(range(-game.size+1, game.size))
+
+            
+
+        moves = list(range(-(game.size - 1), game.size -1, 1))
         exclude_zero = {0}
         moves = list(num for num in moves if num not in exclude_zero)
 
@@ -52,54 +58,16 @@ def breadth_first_search(game):
             for move in moves:
                 command = f"{temp_car.car_id} {move}"
                 if current_state.is_valid(command, temp_car, temp_car.car_id):
-
                     temp_game = deepcopy(current_state) 
                     temp_game.move_cars(command, "B") 
-                    
+
                     _str = str(temp_game.board)
                     if _str not in visited:
                         visited.add(_str)
                         queue.append(temp_game)
-                        history.append(command + history[i])
-                        
-        # print(queue)
+                        history.append(current_history + [command])
 
+    
     return False
-
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    # # while queue:
-    # #     current_state = queue.pop(0)
-    # #     if game.board.is_solution(current_state):
-    # #         return current_state
-    # #     for next_state in .board.chart_moves(current_state):
-    # #         if next_state not in visited:
-    # #             queue.append(next_state)
-    # #             visited.append(next_state)
-    # # return None
-
 
 

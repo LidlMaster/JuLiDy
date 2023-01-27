@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
             # Checks if game is solved and ends game
             if rushhour.is_solved():
-                rushhour.give_output(file, field_names, dict)
+                rushhour.give_output(file, field_names)
                 print("Won in", rushhour.get_moves(file), "moves")
                 print("And with", comm, "commands")
                 # from animate_algorithms import Animate
@@ -74,14 +74,14 @@ if __name__ == "__main__":
 
             # Checks if game is solved and ends game
             if rushhour.is_solved():
-                rushhour.give_output(file, field_names, dict)
+                rushhour.give_output(file, field_names)
                 print("Won in", rushhour.get_moves(file), "moves")
                 print("And with", comm, "commands")
                 break
         elif mode == "B":
             breadth_first_search(rushhour)
             if rushhour.is_solved():
-                rushhour.give_output(file, field_names, dict)
+                rushhour.give_output(file, field_names)
                 print("Won in", rushhour.get_moves(file), "moves")
                 print("And with", comm, "commands")
                 break

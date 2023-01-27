@@ -69,5 +69,3 @@ def breadth_first_search(game):
 
     
     return False
-
-

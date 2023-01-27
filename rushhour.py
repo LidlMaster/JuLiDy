@@ -45,6 +45,7 @@ class Rushhour:
         pre: file is a string, field_names is a list and dict is a list of dictionaries.
         post: a csv file of the given name
         """
+        print("Dict wordt gemaakt")
         # Check if na,me for file is given
         if file != 'n':
             # Code from https://www.geeksforgeeks.org/how-to-save-a-python-dictionary-to-a-csv-file/
@@ -53,18 +54,6 @@ class Rushhour:
                 writer = csv.DictWriter(csvfile, fieldnames = field_names)
                 writer.writeheader()
                 writer.writerows(self.dict)
-
-    def want_output(self) -> str:
-        """Asks the filename.
-        post: file is a string of the filename.
-        """
-        file: str
-        file = 'n'
-        while not file.endswith('.csv'):
-            # Asks for the filename
-            file = input("To what csv file do you want it written? ")
-        # Returns
-        return file
 
     def get_moves(self, file: str) -> int:
         """Gets the number of moves from the output file.

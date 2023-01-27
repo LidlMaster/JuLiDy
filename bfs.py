@@ -25,7 +25,7 @@ from rushhour import Rushhour
 from board import Board
 from copy import deepcopy
 
-def breadth_first_search(game):        
+def breadth_first_search(game):    
     queue = [game]
     history = [[]]
     visited = set()
@@ -38,7 +38,16 @@ def breadth_first_search(game):
             print(current_state.board)
             print(current_history[:len(current_history)])
             print(len(current_history))
+            
+            # Saving made moves in outputfile
+            fieldnames =game.make_field_names()
+            for command in current_history:
+                game.update_dict(command) 
+
+            game.give_output("output.csv", fieldnames)             
             exit(1)
+
+            
 
         moves = list(range(-(game.size - 1), game.size -1, 1))
         exclude_zero = {0}
@@ -51,12 +60,12 @@ def breadth_first_search(game):
                 if current_state.is_valid(command, temp_car, temp_car.car_id):
                     temp_game = deepcopy(current_state) 
                     temp_game.move_cars(command, "B") 
+
                     _str = str(temp_game.board)
                     if _str not in visited:
                         visited.add(_str)
                         queue.append(temp_game)
                         history.append(current_history + [command])
 
+    
     return False
-
-# def lijstmaakt():

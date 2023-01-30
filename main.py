@@ -120,5 +120,5 @@ if __name__ == "__main__":
                 comm += 1
             depth_first_search(rushhour)
         else:
-            print("invalid mode, valid modes are H, R, or B.")   
+            print("invalid mode, valid modes are H, R, E, B or D.")   
             break         

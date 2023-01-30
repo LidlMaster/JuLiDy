@@ -1,0 +1,11 @@
+Requirements:
+
+To be able to run this instance of rushhour please make sure to download and install the following moduals:
+- numpy:
+    $pip install numpy
+- pandas:
+    $pip install pandas
+- matplotlib:
+    $pip install matplotlib
+
+Minimally 12GB RAM memoryspace is required to perform a run of a Bread-First Search algorithm when applied to a board with size 12x12.

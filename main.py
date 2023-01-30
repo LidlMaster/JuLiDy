@@ -44,6 +44,25 @@ if __name__ == "__main__":
     # Start game
     while True:
         if mode == "R":
+            if comm == 0:
+                print(rushhour.place_cars())
+            # Prompt input from user or algorithm 
+            vehicle = algorithm.random_selection(rushhour.cars)
+            afstand = algorithm.random_movement(rushhour)
+            command = algorithm.make_move(vehicle, afstand)
+            comm += 1
+            # Uses input command to move selected vehicle
+            rushhour.move_cars(command, mode)
+            # Checks if game is solved and ends game
+            if rushhour.is_solved():
+                rushhour.give_output(file, field_names)
+                print("Won in", rushhour.get_moves(file), "moves")
+                print("And with", comm, "commands")
+                # from animate_algorithms import Animate
+                break       
+        elif mode == "E":
+            if comm == 0:
+                print(rushhour.place_cars())
             # Start a while loop, to keep the number of moves under a given number
             while not rushhour.is_solved(): 
                 # Prompt input from user or algorithm 
@@ -56,7 +75,7 @@ if __name__ == "__main__":
 
                 # Uses input command to move selected vehicle
                 rushhour.move_cars(command, mode)
-
+                
                 # Checks if game is solved and ends game
                 if rushhour.is_solved():
                     rushhour.give_output(file, field_names)
@@ -65,7 +84,7 @@ if __name__ == "__main__":
                     # from animate_algorithms import Animate
                     break
                 # Reset if number of moves is bigger than the cap
-                elif len(dict) >= 10000:
+                elif len(dict) >= 30000:
                     rushhour = Rushhour(game_name, size)
                     algorithm = Random()
                     dict = rushhour.dict

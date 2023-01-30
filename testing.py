@@ -48,8 +48,6 @@ if __name__ == "__main__":
     while True:
         if mode == "R":
             while times <= 1000:
-                if comm == 0:
-                    print(rushhour.place_cars())
                 # Prompt input from user or algorithm 
                 vehicle = algorithm.random_selection(rushhour.cars)
                 afstand = algorithm.random_movement(rushhour)
@@ -60,8 +58,6 @@ if __name__ == "__main__":
                 # Checks if game is solved and ends game
                 if rushhour.is_solved():
                     rushhour.give_output(file, field_names)
-                    #print("Won in", rushhour.get_moves(file), "moves")
-                    #print("And with", comm, "commands")
                     command_list.append(comm)
                     move_list.append(rushhour.get_moves(file))
                     times += 1
@@ -70,8 +66,6 @@ if __name__ == "__main__":
                     dict = rushhour.dict
                     rushhour.place_cars()
                     comm = 0
-                    #print(times)
-                    # from animate_algorithms import Animate
                     break
             if times >= 1000: 
                 mean_comm = statistics.mean(command_list)
@@ -87,11 +81,45 @@ if __name__ == "__main__":
                 print("Mediaan", median_move, "moves")
                 print("Standaard deviatie", stdev_move, "moves")
                 break
-                    
         elif mode == "E":
             while times <= 1000:
-                # if comm == 0:
-                #     print(rushhour.place_cars())
+                # Prompt input from user or algorithm 
+                vehicle = algorithm.random_selection(rushhour.cars)
+                afstand = algorithm.random_movement(rushhour)
+                command = algorithm.make_move(vehicle, afstand)
+                comm += 1
+                # Uses input command to move selected vehicle
+                rushhour.move_cars(command, mode)
+                # Checks if game is solved and ends game
+                if rushhour.is_solved():
+                    rushhour.give_output(file, field_names)
+                    command_list.append(comm)
+                    move_list.append(rushhour.get_moves(file))
+                    times += 1
+                    rushhour = Rushhour(game_name, size)
+                    algorithm = Random()
+                    dict = rushhour.dict
+                    rushhour.place_cars()
+                    comm = 0
+                    print(times)
+                    break
+            if times >= 1000: 
+                mean_comm = statistics.mean(command_list)
+                mean_move = statistics.mean(move_list)
+                median_comm = statistics.median(command_list)
+                median_move = statistics.median(move_list)
+                stdev_comm = statistics.stdev(command_list)
+                stdev_move = statistics.stdev(move_list)
+                print("Gemiddeld", mean_comm, "commands")
+                print("Mediaan", median_comm, "commands")
+                print("Standaard deviatie", stdev_comm, "commands")
+                print("Gemiddeld", mean_move, "moves")
+                print("Mediaan", median_move, "moves")
+                print("Standaard deviatie", stdev_move, "moves")
+                break
+            break      
+        elif mode == "C":
+            while times <= 1000:
                 # Start a while loop, to keep the number of moves under a given number
                 while not rushhour.is_solved(): 
                     # Prompt input from user or algorithm 
@@ -106,8 +134,6 @@ if __name__ == "__main__":
                     # Checks if game is solved and ends game
                     if rushhour.is_solved():
                         rushhour.give_output(file, field_names)
-                        # print("Won in", rushhour.get_moves(file), "moves")
-                        # print("And with", comm, "commands")
                         command_list.append(comm)
                         move_list.append(rushhour.get_moves(file))
                         times += 1
@@ -117,7 +143,6 @@ if __name__ == "__main__":
                         rushhour.place_cars()
                         comm = 0
                         print(times)
-                        # from animate_algorithms import Animate
                         break
                     # Reset if number of moves is bigger than the cap
                     elif len(dict) >= 30000:
@@ -141,19 +166,6 @@ if __name__ == "__main__":
                 print("Standaard deviatie", stdev_move, "moves")
                 break
             break
-        elif mode == "H":
-            print(rushhour.place_cars())
-            # Promts User for move input
-            command = input("Welke auto wil je waarheen bewegen?").upper()
-            # Uses input command to move selected vehicle
-            rushhour.move_cars(command, mode)
-
-            # Checks if game is solved and ends game
-            if rushhour.is_solved():
-                rushhour.give_output(file, field_names)
-                print("Won in", rushhour.get_moves(file), "moves")
-                print("And with", comm, "commands")
-                break
         elif mode == "B":
             print(rushhour.place_cars())
             breadth_first_search(rushhour)
@@ -161,5 +173,5 @@ if __name__ == "__main__":
             print(rushhour.place_cars())
             depth_first_search(rushhour)
         else:
-            print("invalid mode, valid modes are H, R, E, B or D.")   
+            print("invalid mode, valid modes are R, E, C, B or D.")   
             break         

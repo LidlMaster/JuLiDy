@@ -31,19 +31,19 @@ The differnt algoritmes are categorised in the code as modes.
 The modes being: Manual (H), Baseline/Random (R), non-naïve Random (E), BFS (B), DFS (D).
 
 An example for a correct command would be:
-"$python3 main.py 6x6_3 R"
+< $python3 main.py 6x6_3 R" >
 
 ## Instructions generating animations:
 To animate an experimental run the first thing to do is run the algorithm using the command as explained above.
 After which you need to change the input in the animate function on line 232. Lastly run the the animate code the following using command:
 
-"$python3 animate_algorithms.py"
+< $python3 animate_algorithms.py >
 
 ## Instructions generating results:
 To generate reliable results the algorithms need to be run more than once. Because of that code was implemented in a sperate file, specificly to run an algorithm a thousand times and collect the result in a excel sheet. 
 To run this code the following example command can be used:
 
-"$python3 results.py 6x6_3 R"
+< $python3 results.py 6x6_3 R >
 
 To access different algorithms and boardconfiguartions use commands as earlier stated above.
 

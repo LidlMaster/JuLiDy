@@ -169,9 +169,9 @@ class Rushhour:
                         self.dict = self.update_dict(command)
 
                     # Print the board
-                    if mode == "H" or mode == 'h':
+                    if mode == "H":
                         print(self.board)
-                        print("")
+                        # print("")
     
     def is_valid(self, command: str, car: Car, autoID: str) -> bool:
         """ Checks if input move is valid """

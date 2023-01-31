@@ -33,6 +33,12 @@ The modes being: Manual (H), Baseline/Random (R), non-naïve Random (E), BFS (B)
 An example for a correct command would be:
 < $python3 main.py 6x6_3 R" >
 
+To install requirements for this project use the following command:
+
+< pip install -r requirements.txt >
+
+This will install the extensions matplotlib en pandas.
+
 ## Instructions generating animations:
 To animate an experimental run the first thing to do is run the algorithm using the command as explained above.
 After which you need to change the input in the animate function on line 232. Lastly run the the animate code the following using command:

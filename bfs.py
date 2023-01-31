@@ -25,7 +25,7 @@ from rushhour import Rushhour
 from board import Board
 from copy import deepcopy
 
-def breadth_first_search(game):    
+def breadth_first_search(game):
     queue = [game]
     history = [[]]
     visited = set()

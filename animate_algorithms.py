@@ -85,10 +85,12 @@ class Animate:
         # Open the file
         with open(file) as f:
             next(f)
+
             # Go through all the lines
             for line in f:
                 if not line.strip():
                     break
+
                 data = line.strip().split(",")
                 # Get the information of the cars and save to self.cars
                 car = Car(data[0], data[1], data[2], data[3], data[4])
@@ -229,7 +231,7 @@ class Animate:
 # Set up initial state and get variables
 
 # Set up the initial state of Animate
-animates = Animate('12x12_7', 12)
+animates = Animate('9x9_4', 9)
 
 # Get the needed variables to set the board
 output = animates.import_output_file()
@@ -289,8 +291,8 @@ rushHour = FuncAnimation(fig, animate, frames = len(direction_x), interval = int
 
 # Based on https://holypython.com/how-to-save-matplotlib-animations-the-ultimate-guide/
 # Save animation as an gif-file
-f = r"c://Users/judit/Documents/Algoritmen_Heuristieken/JuLiDy/animation_12.gif" 
-writergif = animation.PillowWriter(fps = 20) 
+f = r"c://Users/judit/Documents/Algoritmen_Heuristieken/animation_bfs.gif" 
+writergif = animation.PillowWriter(fps = 2) 
 rushHour.save(f, writer = writergif)
 
 # Show the animation

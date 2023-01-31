@@ -38,6 +38,7 @@ def breadth_first_search(game):
             print(current_state.board)
             print(current_history[:len(current_history)])
             print(len(current_history))
+            print(len(visited))
             
             # Saving made moves in outputfile
             fieldnames =game.make_field_names()

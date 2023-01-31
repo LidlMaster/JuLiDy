@@ -2,7 +2,6 @@ from queue import LifoQueue
 from rushhour import Rushhour
 from board import Board
 from copy import deepcopy
-from random import shuffle
 
 def depth_first_search(game):
     stack = LifoQueue() # Use a stack instead of a queue
@@ -18,20 +17,18 @@ def depth_first_search(game):
             print(current_state.board)
             print(current_history[:len(current_history)])
             print(len(current_history))
+            print(len(visited))
             exit(1)
 
-        if len(current_history) > 35000:
+        if len(current_history) > 150:
             continue
-        
+
         moves = list(range(-(game.size - 1), game.size -1, 1))
         exclude_zero = {0}
         moves = list(num for num in moves if num not in exclude_zero)
 
-        cars = list(current_state.cars.keys())
-        shuffle(cars)
-        for car in cars:
-            temp_car = deepcopy(current_state.cars[car])
-            shuffle(moves)
+        for car in current_state.cars:    
+            temp_car = deepcopy(current_state.cars[car])       
             for move in moves:
                 command = f"{temp_car.car_id} {move}"
                 if current_state.is_valid(command, temp_car, temp_car.car_id):

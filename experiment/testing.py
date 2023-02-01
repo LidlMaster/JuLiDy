@@ -4,12 +4,15 @@ import statistics
 import os
 import sys
 import inspect
+from typing import List
 
 # Import from different folder
+currentdir: str
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 
+# Import files from the previous given directory
 from rushhour import Rushhour
 from baseline import Random
 from bfs import breadth_first_search
@@ -28,6 +31,7 @@ if __name__ == "__main__":
     # Checks if additional arguments are provided for how code should be ran
     if len(argv) == 2:
         # Default is player based input
+        mode: str
         mode = "H"
     else: 
         # Else mode is based on additional argument (Currently H for "Hand" or R for "Random")
@@ -35,6 +39,7 @@ if __name__ == "__main__":
 
     # Strip input filename for size of board
     size = int(game_name[0])
+
     if game_name[1].isdigit():
         size = size * 10
         size += int(game_name[1])
@@ -46,10 +51,15 @@ if __name__ == "__main__":
     # Create list of moves
     dict = rushhour.dict
     field_names = rushhour.make_field_names()
+    file: str
     file = 'output.csv'
+    command_list: List[int]
     command_list = []
+    move_list: List[int]
     move_list = []
+    times: int
     times = 0
+    comm: int
     comm = 0
 
     # Start game
@@ -60,7 +70,7 @@ if __name__ == "__main__":
             while times <= 1000:
                 # Prompt input from user or algorithm 
                 vehicle = algorithm.random_selection(rushhour.cars)
-                afstand = algorithm.random_movement(rushhour)
+                afstand = algorithm.random_movement()
                 command = algorithm.make_move(vehicle, afstand)
                 comm += 1
                 # Uses input command to move selected vehicle
@@ -111,7 +121,7 @@ if __name__ == "__main__":
             while times <= 1000:
                 # Prompt input from user or algorithm 
                 vehicle = algorithm.random_selection(rushhour.cars)
-                afstand = algorithm.random_movement(rushhour)
+                afstand = algorithm.random_movement()
                 command = algorithm.make_move(vehicle, afstand)
                 comm += 1
                 # Uses input command to move selected vehicle
@@ -165,7 +175,7 @@ if __name__ == "__main__":
                     # Prompt input from user or algorithm 
                     vehicle = algorithm.random_selection(rushhour.cars)
                     # print("v:",vehicle)
-                    afstand = algorithm.random_movement(rushhour)
+                    afstand = algorithm.random_movement()
                     # print("a:",afstand)
                     command = algorithm.make_move(vehicle, afstand)
                     comm += 1

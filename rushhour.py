@@ -1,9 +1,9 @@
+# Import libraries
 from car import Car
 from board import Board
 import csv
-import pandas as pd
+import pandas as pd #type: ignore
 from typing import List, TypeVar, Dict, Any
-from copy import deepcopy
 
 Self = TypeVar("Self", bound="Rushhour")
 
@@ -17,17 +17,25 @@ class Rushhour:
         self.board: Board
         self.board = Board(size)
         self.size = size
+        self.dict: List[Dict[str, int]]
         self.dict = []
 
 
     def load_cars(self, filename: str) -> None:
-        """ Read in input file, strip variables per car and stores it in a cars dictionary """
+        """ Read in input file, strip variables per car and stores it in a cars dictionary"""
+        # Open input file
         with open(filename) as f:
+            # Skip the first line
             next(f)
+            # Go through each line
             for line in f:
+                # Check for end of file
                 if not line.strip():
                     break
+
+                # Split at comma's
                 data = line.strip().split(",")
+                # Note the different properties of the cars and put in a dictionary
                 car = Car(data[0], data[1], data[2], data[3], data[4])
                 self.cars[data[0]] = car
                 
@@ -71,13 +79,15 @@ class Rushhour:
     def update_dict(self, command: str) -> List[Dict[str, int]]:
         """Updates the dict with the command
         post: dict is a list of dictionaries"""
-
-        # Save the info of the command
         autoID: str
         autoID = ''
+
+        # Go through the command
         for i in range(len(command)):
+            # Check for end of command
             if command[i] == ' ':
                 break
+            # Save the autoID from the command
             else: 
                 autoID = autoID + command[i]
        
@@ -101,6 +111,7 @@ class Rushhour:
     
     def place_cars(self) -> Board:
         """ Place cars in constructed grid using coördinates and length from the cars dictionary """
+        # Go through each car
         for car in self.cars:
             # Place cars with Horizontal orientation
             if self.cars[car].orientation == "H":
@@ -119,6 +130,8 @@ class Rushhour:
         # Isolates and saves carID from input string into variable
         autoID: str
         autoID = ''
+
+        # Goes through the command
         for i in range(len(command)):
             if command[i] == ' ':
                 break
@@ -167,17 +180,13 @@ class Rushhour:
                             self.board.board[i][self.cars[car].column] = self.cars[car].car_id
                         # Update list of dicts
                         self.dict = self.update_dict(command)
-
-                    # Print the board
-                    if mode == "H":
-                        print(self.board)
-                        # print("")
     
     def is_valid(self, command: str, car: Car, autoID: str) -> bool:
         """ Checks if input move is valid """
         # Check if selected vehicle exists in dictionary
         if autoID not in self.cars:
             return False
+
         else:
             # Isolates and saves input string movingdistance into variable and convert into integer
             for i in range(len(command)):
@@ -189,19 +198,24 @@ class Rushhour:
                 elif command[i].isdigit():
                     move = int(command[i])
                     break
+            
+            # Checks if a move is given
             if move == 0:
                 return False
+
             # Move car for cars with Horizontal orientation
             if car.orientation == 'H':
                 # Checks if input move is inside bounds grid
                 if car.column + move + car.length -1 >= len(self.board.board) or car.column + move < 0:
                     return False
+
                 if (self.board.board[car.row][car.column + move] == '__' or self.board.board[car.row][car.column + move] == autoID) and (self.board.board[car.row][car.column + move + 1] == '__' or self.board.board[car.row][car.column + move + 1] == autoID):
                     # Checks if there are no cars in between selected car and next location
                     if move > 0:
                         for i in range(move):
                             if self.board.board[car.row][car.column + i + car.length] != '__' and self.board.board[car.row][car.column + i + car.length] != autoID:
                                 return False
+
                     elif move < 0:
                         for i in range(move - car.length, -1):
                             if self.board.board[car.row][car.column + i + car.length] != '__' and self.board.board[car.row][car.column + i + car.length] != autoID:
@@ -213,6 +227,7 @@ class Rushhour:
                 # Checks if input move is inside bounds grid
                 if car.row + move + car.length - 1 >= len(self.board.board) or car.row + move < 0:
                     return False
+
                 # Checks if new location is empty or same carID
                 if (self.board.board[car.row + move][car.column] == '__' or self.board.board[car.row + move][car.column] == autoID) and (self.board.board[car.row + move + 1][car.column] == '__' or self.board.board[car.row + move + 1][car.column] == autoID):
                     # Checks if there are no cars in between selected car and next location
@@ -220,15 +235,18 @@ class Rushhour:
                         for i in range(move):
                             if self.board.board[car.row + i + car.length][car.column] != '__' and self.board.board[car.row + i + car.length][car.column] != autoID:
                                 return False
+
                     elif move < 0:
                         for i in range(move - car.length, -1):
                             if self.board.board[car.row + i + car.length][car.column] != '__' and self.board.board[car.row + i + car.length][car.column] != autoID:
                                 return False
 
                     return True
+
             # Checks if orientation is invalid (not H or V)   
             else:
                 return False
+
         return False
 
     def is_solved(self) -> bool:
@@ -243,5 +261,6 @@ class Rushhour:
         # Check if the red car is at the right place and return True if finished, false if not
         if self.board.board[row_x][-2] == "X" and self.board.board[row_x][-1] == "X":
             return True
+
         else:
             return False

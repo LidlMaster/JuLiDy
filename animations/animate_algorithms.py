@@ -4,7 +4,6 @@ from matplotlib.patches import Rectangle # type: ignore
 from matplotlib.animation import FuncAnimation # type: ignore
 from matplotlib import animation
 import pandas as pd # type: ignore
-#from car import Car
 import random
 from typing import TypeVar, Dict, Any, List
 import os

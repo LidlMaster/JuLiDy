@@ -3,7 +3,11 @@ import matplotlib.pyplot as plt  # type: ignore
 from matplotlib.patches import Rectangle  # type: ignore
 from matplotlib.animation import FuncAnimation  # type: ignore
 from matplotlib import animation
+<<<<<<< HEAD:code/animations/animate_algorithms.py
 import pandas as pd  # type: ignore
+=======
+import pandas as pd # type: ignore
+>>>>>>> 8bb8ed302da275a374c358bea59501fcc7a0ff80:animations/animate_algorithms.py
 import random
 from typing import TypeVar, Dict, Any, List
 import os
@@ -13,10 +17,16 @@ import inspect
 # Import from different folder
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
+<<<<<<< HEAD:code/animations/animate_algorithms.py
 grounddir = os.path.dirname(os.path.dirname(currentdir))
 sys.path.insert(0, grounddir)
 
 from code.classes.car import Car
+=======
+sys.path.insert(0, parentdir) 
+
+from car import Car
+>>>>>>> 8bb8ed302da275a374c358bea59501fcc7a0ff80:animations/animate_algorithms.py
 
 # Make typevar hints for self
 Self = TypeVar("Self", bound="Animate")
@@ -54,7 +64,11 @@ class Animate:
         """Read in the output file to later use it to move.
         Post: output is a Pandas dataframe with the moves each car made during the algorithm
         """
+<<<<<<< HEAD:code/animations/animate_algorithms.py
         full_path = os.path.join(grounddir, '../JuLiDy/output.csv')
+=======
+        full_path = os.path.join(script_dir, '../../JuLiDy/output.csv')
+>>>>>>> 8bb8ed302da275a374c358bea59501fcc7a0ff80:animations/animate_algorithms.py
         # Get the output file from the directory
         output = pd.read_csv(full_path)
         return output
@@ -64,8 +78,12 @@ class Animate:
         Post: game is a string which contains the direction to the gameboard file
         """
         # Save the right directory to the gameboard files
+<<<<<<< HEAD:code/animations/animate_algorithms.py
         game = os.path.join(
             grounddir, f'../JuLiDy/gameboards/Rushhour{self.game_name}.csv')
+=======
+        game = os.path.join(script_dir, f'../../JuLiDy/gameboards/Rushhour{self.game_name}.csv')
+>>>>>>> 8bb8ed302da275a374c358bea59501fcc7a0ff80:animations/animate_algorithms.py
         return game
 
     def create_plot(self) -> Any:
@@ -160,7 +178,7 @@ class Animate:
 
     def save_row(self) -> Dict[str, int]:
         """Puts the y coördinate (row number) of each car in a dictionary.
-        Post: self.rows is a dictionary which consists of a string with the car name
+        Post: self.rows is a dictionary which consists of a string with the car name 
         and an integer with the y coördinate
         """
         # Go through each car in self.cars and get the y coördinate of each Rectangle type
@@ -172,7 +190,7 @@ class Animate:
 
     def save_column(self) -> Dict[str, int]:
         """Puts the x coördinate (column number) of each car in a dictionary.
-        Post: self.rows is a dictionary which consists of a string with the car name
+        Post: self.rows is a dictionary which consists of a string with the car name 
         and an integer with the x coördinate
         """
         # Go through each car in self.cars and the x coördinate of each Rectangel type
@@ -185,7 +203,7 @@ class Animate:
     def get_column(self, output: Any) -> List[int]:
         """Puts the column the cars are changed to into a list.
         Pre: output is an Any type, because it is a Pandas Dataframe
-        Post: self.direction_x is a list with the x coördinates the car is changed to,
+        Post: self.direction_x is a list with the x coördinates the car is changed to, 
         according to the output file
         """
         # Go through each line of the output file
@@ -210,7 +228,7 @@ class Animate:
     def get_row(self, output: Any) -> List[int]:
         """Puts the rows the cars are changed to into a list.
         Pre: output is an Any type, because it is a Pandas Dataframe
-        Post: self.direction_y is a list with the y coördinates the car is changed to,
+        Post: self.direction_y is a list with the y coördinates the car is changed to, 
         according to the output file
         """
         # Go through each line of the output file
@@ -235,7 +253,7 @@ class Animate:
     def get_car(self, output: Any) -> List[str]:
         """Puts the cars which are changed into a list.
         Pre: output is an Any type, because it is a Pandas Dataframe
-        Post: self.car_move is a list in which all the names of the cars, which are moved,
+        Post: self.car_move is a list in which all the names of the cars, which are moved, 
         are documented
         """
         # Go through each line of the output file
@@ -251,7 +269,7 @@ class Animate:
 
 
 # Set up the initial state of Animate
-animates = Animate('6x6_1', 6)
+animates = Animate('6x6_2', 6)
 
 # Get the needed variables to set the board
 output = animates.import_output_file()
@@ -315,8 +333,13 @@ rushHour = FuncAnimation(fig, animate, frames=len(direction_x), interval=interva
 # Based on https://holypython.com/how-to-save-matplotlib-animations-the-ultimate-guide/
 # Save animation as an gif-file
 f = f"{script_dir}/animation.gif"
-writergif = animation.PillowWriter(fps = 2)
+<<<<<<< HEAD:code/animations/animate_algorithms.py
+writergif = animation.PillowWriter(fps=2)
+rushHour.save(f, writer=writergif)
+=======
+writergif = animation.PillowWriter(fps = 2) 
 rushHour.save(f, writer = writergif)
+>>>>>>> 8bb8ed302da275a374c358bea59501fcc7a0ff80:animations/animate_algorithms.py
 
 # Show the animation
 plt.show()

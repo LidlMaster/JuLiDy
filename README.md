@@ -16,16 +16,14 @@ For the experimenta algorithms the following strategies will be used:
 - Depth-First Search algorithm (DFS)
 
 ## File Format
-The board configurations of the given Rush Hour problems a given in the foorms of .csv files. The filenames of which contain the boardsizes and the board number. These are used during initiating the game to selct the correct file and generating the correct boardsize.
+The board configurations of the given Rush Hour problems are given in the forms of .csv files. The filenames of which contain the boardsizes and the board number. These are used while initiating the game to select the correct file and generating the correct boardsize.
 
 Each file contains the following:
-Each row has 5 elements. The first number contains carId followed by a letter that describes car-orientation (either "h" (horizontal) or "v" (vertical)). The next two variables form the coördinates on the board, with collumn and row and lastly the carlenght.
+Each row has 5 elements. The first number contains carID followed by a letter that describes car-orientation (either "h" (horizontal) or "v" (vertical)). The next two variables form the coordinates on the board, with column and row and lastly the carlength
 
 ## Instructions running algorithms:
-To run correctly run the algorithms the usage is as follows.
-Firstly to select a board a you must choose a file and use the size an undercore and board the number at the end of the filename.
-Possible sizes being : 6x6, 9x9 and 12x12. 
-And with 7 different boards to choose form in this repository
+To correctly run the algorithms the usage is as follows.
+Firstly to select a board, there are 7 different boards, 3 6x6 boards, 3 9x9 boards and finally one 12x12  board. (These can be found in the gameboards folder) To select a board you must enter the board sizes, followed by the board ID (6x6_3, of 9x9_4 for example)
 
 The differnt algoritmes are categorised in the code as modes. 
 The modes being: Manual (H), Baseline/Random (R), non-naïve Random (E), BFS (B), DFS (D).
@@ -39,17 +37,12 @@ _< pip install -r requirements.txt >_
 
 This will install the extensions matplotlib en pandas.
 
-To install requirements for this project use the following command:
-
-< pip install -r requirements.txt >
-
-This will install the extensions matplotlib en pandas.
-
 ## Instructions generating animations:
 To animate an experimental run the first thing to do is run the algorithm using the command as explained above.
-After which you need to change the input in the animate function on line 247. Lastly run the the animate code the following using command:
+This is to create an output.csv file.
+You can then run animate the output file using code with the following using command:
 
-_< $python3 animate_algorithms.py >_
+_< $python3 code/animations/animate_algorithms.py <board of the outputfile>_
 
 ## Instructions generating results:
 To generate reliable results the algorithms need to be run more than once. Because of that code was implemented in a sperate file, specificly to run an algorithm a thousand times and collect the result in a excel sheet. 
@@ -60,7 +53,7 @@ _< $python3 experiments/testing.py 6x6_3 R >_
 To access different algorithms and boardconfiguartions use commands as earlier stated above.
 
 ## Results
-<<<<<<< HEAD
+
 
 ![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Means%20of%20random%20algorithms.png)
 ![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Means%20of%20bfs%20and%20dfs%20algorithms.png)
@@ -79,16 +72,12 @@ Lastly was the difference that was found between the mean and the median from th
 
 ![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Random%20mean%20vs%20median.png)
 _Figure 3: In this graph the the mean different moves and the median number of moves form the baseline random algorithm can be compared. In order to calculate these results the algorithms were run a thousand times._
->>>>>>> 8bb8ed302da275a374c358bea59501fcc7a0ff80
+
 
 ![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Non-naive%20random%20mean%20vs%20median.png)
 _Figure 4: In this graph the the mean different moves and the median number of moves form the non-naive random algorithm can be compared. To achieve a non-naive algorithm code was implemeted that makes it possible for the vehicles in the game to move more then one space at the time. In order to calculate these results the algorithms were run a thousand times._
 
-<<<<<<< HEAD
-![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Random%20mean%20vs%20median.png)
-![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Non-naive%20random%20mean%20vs%20median.png)
-![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Non-naive%20random%20cap%20mean%20vs%20median.png)
-=======
+
 ![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Non-naive%20random%20cap%20mean%20vs%20median.png)
 _Figure 5: In this graph the the mean different moves and the median number of moves form the non-naive random algorithm with a limit on how many moves can be performed can be compared. This limit was put on a cap of 30000 moves to get a efficient balance between efficient number of moves and a functional runtime. In order to calculate these results the algorithms were run a thousand times._
->>>>>>> 8bb8ed302da275a374c358bea59501fcc7a0ff80
+

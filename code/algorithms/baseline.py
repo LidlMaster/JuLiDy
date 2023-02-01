@@ -1,6 +1,6 @@
 import random
 from typing import Dict
-from rushhour import Rushhour
+from code.classes.rushhour import Rushhour
 
 class Random:
     def random_selection(self, dictionary: Dict):

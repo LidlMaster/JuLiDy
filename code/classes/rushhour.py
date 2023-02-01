@@ -1,5 +1,5 @@
-from car import Car
-from board import Board
+from .car import Car
+from .board import Board
 import csv
 import pandas as pd
 from typing import List, TypeVar, Dict, Any

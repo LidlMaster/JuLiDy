@@ -1,10 +1,8 @@
-from rushhour import Rushhour
-from board import Board
-from baseline import Random
-import random
+from code.classes.rushhour import Rushhour
+from code.algorithms.baseline import Random
 from sys import argv
-from bfs import breadth_first_search
-from dfs import depth_first_search
+from code.algorithms.bfs import breadth_first_search
+from code.algorithms.dfs import depth_first_search
 
 
 if __name__ == "__main__":

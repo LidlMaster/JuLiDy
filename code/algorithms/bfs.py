@@ -21,8 +21,8 @@
 # https://stackabuse.com/courses/graphs-in-python-theory-and-implementation/lessons/breadth-first-search-bfs-algorithm/
 
 from queue import Queue
-from rushhour import Rushhour
-from board import Board
+# from code.classes.rushhour import Rushhour
+# from code.classes.board import Board
 from copy import deepcopy
 
 def breadth_first_search(game):
@@ -64,7 +64,6 @@ def breadth_first_search(game):
 
                     _str = str(temp_game.board)
                     if _str not in visited:
-                        print(_str)
                         visited.add(_str)
                         queue.append(temp_game)
                         history.append(current_history + [command])

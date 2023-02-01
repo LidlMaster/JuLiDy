@@ -1,17 +1,32 @@
 # Import libraries
-import matplotlib.pyplot as plt # type: ignore
-from matplotlib.patches import Rectangle # type: ignore
-from matplotlib.animation import FuncAnimation # type: ignore
+import matplotlib.pyplot as plt  # type: ignore
+from matplotlib.patches import Rectangle  # type: ignore
+from matplotlib.animation import FuncAnimation  # type: ignore
 from matplotlib import animation
-import pandas as pd # type: ignore
-from car import Car
+import pandas as pd  # type: ignore
 import random
 from typing import TypeVar, Dict, Any, List
+import os
+import sys
+import inspect
+
+# Import from different folder
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+grounddir = os.path.dirname(os.path.dirname(currentdir))
+sys.path.insert(0, grounddir)
+
+from code.classes.car import Car
 
 # Make typevar hints for self
 Self = TypeVar("Self", bound="Animate")
 
+# Set the current directory
+script_dir = os.path.dirname(__file__)
+
 # This class is based on the previous made file animation.py and rushhour.py
+
+
 class Animate:
     def __init__(self: Self, game_name: str, size: int) -> None:
         """Initialize"""
@@ -39,8 +54,9 @@ class Animate:
         """Read in the output file to later use it to move.
         Post: output is a Pandas dataframe with the moves each car made during the algorithm
         """
+        full_path = os.path.join(grounddir, '../JuLiDy/output.csv')
         # Get the output file from the directory
-        output = pd.read_csv('output.csv')
+        output = pd.read_csv(full_path)
         return output
 
     def import_game_file(self) -> str:
@@ -48,7 +64,8 @@ class Animate:
         Post: game is a string which contains the direction to the gameboard file
         """
         # Save the right directory to the gameboard files
-        game = f"gameboards/Rushhour{self.game_name}.csv"
+        game = os.path.join(
+            grounddir, f'../JuLiDy/gameboards/Rushhour{self.game_name}.csv')
         return game
 
     def create_plot(self) -> Any:
@@ -64,11 +81,11 @@ class Animate:
         if self.size % 2 == 0:
             # Creates the exit line
             ax.plot([self.size + 1, self.size + 1], [(self.size + 2) / 2, (self.size + 2) / 2 + 1],
-                     color = "black")
+                    color="black")
         else:
             # Creates the exit line
             ax.plot([self.size + 1, self.size + 1], [(self.size + 1) / 2 + 1, (self.size + 1) / 2 + 2],
-                     color = "black")
+                    color="black")
 
         # # Based on https://note.nkmk.me/en/python-dict-keys-values-items/
         # # Adds the cars to the board
@@ -120,23 +137,23 @@ class Animate:
             # Check orientation, size and/or car_id
             if self.cars[car].orientation == 'H' and self.cars[car].car_id != 'X':
                 # Define the size, name, colour and location of the horizontally placed cars (not X)
-                self.dict_cars['car{0}'.format(self.cars[car].car_id)] = Rectangle((self.cars[car].column, 
-                                                        self.size + 1 - self.cars[car].row),
-                                                        self.cars[car].length, 1, color = colour)
+                self.dict_cars['car{0}'.format(self.cars[car].car_id)] = Rectangle((self.cars[car].column,
+                                                                                    self.size + 1 - self.cars[car].row),
+                                                                                   self.cars[car].length, 1, color=colour)
             elif self.cars[car].car_id == 'X':
                 # Define the location of car X and set colour to red
                 self.dict_cars['carX'] = Rectangle((self.cars[car].column, self.size + 1 - self.cars[car].row),
-                                 2, 1, color = 'red')
+                                                   2, 1, color='red')
             elif self.cars[car].length == 3 and self.cars[car].orientation == 'V':
                 # Define the location and colour of trucks located vertically
-                self.dict_cars['car{0}'.format(self.cars[car].car_id)] = Rectangle((self.cars[car].column, 
-                                                        self.size - 1 - self.cars[car].row), 1,
-                                                        3, color = colour)
+                self.dict_cars['car{0}'.format(self.cars[car].car_id)] = Rectangle((self.cars[car].column,
+                                                                                    self.size - 1 - self.cars[car].row), 1,
+                                                                                   3, color=colour)
             else:
                 # Define the location, colour and name of the vertically located cars
-                self.dict_cars['car{0}'.format(self.cars[car].car_id)] = Rectangle((self.cars[car].column, 
-                                                        self.size - self.cars[car].row), 1,
-                                                        self.cars[car].length, color = colour)
+                self.dict_cars['car{0}'.format(self.cars[car].car_id)] = Rectangle((self.cars[car].column,
+                                                                                    self.size - self.cars[car].row), 1,
+                                                                                   self.cars[car].length, color=colour)
 
         # Return the dictionary
         return self.dict_cars
@@ -148,18 +165,20 @@ class Animate:
         """
         # Go through each car in self.cars and get the y coördinate of each Rectangle type
         for car in self.cars:
-            self.rows[self.cars[car].car_id] = dict_cars['car{0}'.format(self.cars[car].car_id)].get_y()
+            self.rows[self.cars[car].car_id] = dict_cars['car{0}'.format(
+                self.cars[car].car_id)].get_y()
 
         return self.rows
 
-    def save_column(self) -> Dict[str, int]: 
+    def save_column(self) -> Dict[str, int]:
         """Puts the x coördinate (column number) of each car in a dictionary.
         Post: self.rows is a dictionary which consists of a string with the car name 
         and an integer with the x coördinate
-        """ 
+        """
         # Go through each car in self.cars and the x coördinate of each Rectangel type
         for car in self.cars:
-            self.columns[self.cars[car].car_id] = dict_cars['car{0}'.format(self.cars[car].car_id)].get_x()
+            self.columns[self.cars[car].car_id] = dict_cars['car{0}'.format(
+                self.cars[car].car_id)].get_x()
 
         return self.columns
 
@@ -227,11 +246,12 @@ class Animate:
         # Return the completed list
         return self.car_move
 
-#------------------------------------------------------------
+# ------------------------------------------------------------
 # Set up initial state and get variables
 
+
 # Set up the initial state of Animate
-animates = Animate('9x9_4', 9)
+animates = Animate('6x6_2', 6)
 
 # Get the needed variables to set the board
 output = animates.import_output_file()
@@ -251,11 +271,12 @@ direction_x = animates.get_column(output)
 direction_y = animates.get_row(output)
 car_move = animates.get_car(output)
 
-#------------------------------------------------------------
+# ------------------------------------------------------------
 # Set up animation and refer back to figure
 
 # Set the board
 plt, fig, ax = animates.create_plot()
+
 
 def init() -> Rectangle:
     """Initialize animation"""
@@ -267,6 +288,7 @@ def init() -> Rectangle:
     # Return each car seperately
     for cars in dict_cars.values():
         return cars
+
 
 def animate(i: int) -> str:
     """Prepare the steps for the animation.
@@ -282,18 +304,19 @@ def animate(i: int) -> str:
     # Return the moved car
     return cars
 
+
 # Calculate the validity of the animation
 interval = 1 / len(direction_x)
 
 # Make the animation
-rushHour = FuncAnimation(fig, animate, frames = len(direction_x), interval = interval,
-                         init_func = init, repeat = False)
+rushHour = FuncAnimation(fig, animate, frames=len(direction_x), interval=interval,
+                         init_func=init, repeat=False)
 
 # Based on https://holypython.com/how-to-save-matplotlib-animations-the-ultimate-guide/
 # Save animation as an gif-file
-f = r"c://Users/judit/Documents/Algoritmen_Heuristieken/animation_bfs.gif" 
-writergif = animation.PillowWriter(fps = 2) 
-rushHour.save(f, writer = writergif)
+f = f"{script_dir}/animation.gif"
+writergif = animation.PillowWriter(fps=2)
+rushHour.save(f, writer=writergif)
 
 # Show the animation
 plt.show()

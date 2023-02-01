@@ -8,7 +8,7 @@ from code.algorithms.dfs import depth_first_search
 if __name__ == "__main__":
     # Check command line arguments and respond with usage in case of wrong input
     if len(argv) not in [2, 3]:
-        print("Usage: python rushhour.py <Size>x<Size>_boardnumber")
+        print("Usage: python main.py <Size>x<Size>_boardnumber")
         exit(1)
 
     # Load the requested game

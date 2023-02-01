@@ -9,6 +9,7 @@ from typing import TypeVar, Dict, Any, List
 import os
 import sys
 import inspect
+from sys import argv
 
 # Import from different folder
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -129,7 +130,7 @@ class Animate:
         for car in self.cars:
             # Based on https://www.adamsmith.haus/python/answers/how-to-generate-a-random-color-for-a-matplotlib-plot-in-python
             # Get a random colour
-            r = random.random()
+            r = random.uniform(0, 1)
             g = random.random()
             b = random.random()
             colour = (r, g, b)
@@ -249,9 +250,22 @@ class Animate:
 # ------------------------------------------------------------
 # Set up initial state and get variables
 
+# Check command line arguments and respond with usage in case of wrong input
+if len(argv) not in [2, 3]:
+    print("Usage: python animate_algorithms.py <Size>x<Size>_boardnumber")
+    exit(1)
+
+# Load the requested game
+game_name = argv[1]
+
+# Strip input filename for size of board
+size = int(game_name[0])
+if game_name[1].isdigit():
+    size = size * 10
+    size += int(game_name[1])
 
 # Set up the initial state of Animate
-animates = Animate('6x6_1', 6)
+animates = Animate(game_name, size)
 
 # Get the needed variables to set the board
 output = animates.import_output_file()

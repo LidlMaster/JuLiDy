@@ -304,7 +304,7 @@ rushHour = FuncAnimation(fig, animate, frames = len(direction_x), interval = int
 
 # Based on https://holypython.com/how-to-save-matplotlib-animations-the-ultimate-guide/
 # Save animation as an gif-file
-f = r"c://Users/judit/Documents/Algoritmen_Heuristieken/animation_bfs.gif" 
+f = f"{script_dir}/animation.gif"
 writergif = animation.PillowWriter(fps = 2) 
 rushHour.save(f, writer = writergif)
 

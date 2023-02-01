@@ -11,18 +11,18 @@ import os
 import sys
 import inspect
 
+# Import from different folder
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir) 
 
 from car import Car
-#from ...JuLiDy import car
-
 
 # Make typevar hints for self
 Self = TypeVar("Self", bound="Animate")
 
-script_dir = os.path.dirname(__file__)  # Script directory
+# Set the current directory
+script_dir = os.path.dirname(__file__)
 
 # This class is based on the previous made file animation.py and rushhour.py
 class Animate:

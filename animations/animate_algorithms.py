@@ -4,7 +4,6 @@ from matplotlib.patches import Rectangle # type: ignore
 from matplotlib.animation import FuncAnimation # type: ignore
 from matplotlib import animation
 import pandas as pd # type: ignore
-#from car import Car
 import random
 from typing import TypeVar, Dict, Any, List
 import os
@@ -305,7 +304,7 @@ rushHour = FuncAnimation(fig, animate, frames = len(direction_x), interval = int
 
 # Based on https://holypython.com/how-to-save-matplotlib-animations-the-ultimate-guide/
 # Save animation as an gif-file
-f = r"c://Users/judit/Documents/Algoritmen_Heuristieken/animation_bfs.gif" 
+f = f"{script_dir}/animation.gif"
 writergif = animation.PillowWriter(fps = 2) 
 rushHour.save(f, writer = writergif)
 

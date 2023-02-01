@@ -64,6 +64,7 @@ def breadth_first_search(game):
 
                     _str = str(temp_game.board)
                     if _str not in visited:
+                        print(_str)
                         visited.add(_str)
                         queue.append(temp_game)
                         history.append(current_history + [command])

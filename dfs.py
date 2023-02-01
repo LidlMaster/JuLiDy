@@ -39,6 +39,7 @@ def depth_first_search(game):
                     temp_game.move_cars(command, "B") 
                     _str = str(temp_game.board)
                     if _str not in visited:
+                        print(_str)
                         visited.add(_str)
                         stack.put(temp_game) # Use the `put()` method instead of `append()`
                         history.append(current_history + [command])

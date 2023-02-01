@@ -130,7 +130,7 @@ class Animate:
         for car in self.cars:
             # Based on https://www.adamsmith.haus/python/answers/how-to-generate-a-random-color-for-a-matplotlib-plot-in-python
             # Get a random colour
-            r = random.uniform(0, 1)
+            r = random.uniform(0, 0.75)
             g = random.random()
             b = random.random()
             colour = (r, g, b)

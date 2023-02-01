@@ -53,5 +53,12 @@ To run this code the following example command can be used:
 
 To access different algorithms and boardconfiguartions use commands as earlier stated above.
 
+## Results
+
+![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Means%20of%20random%20algorithms.png)
+![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Means%20of%20bfs%20and%20dfs%20algorithms.png)
 
 
+![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Random%20mean%20vs%20median.png)
+![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Non-naive%20random%20mean%20vs%20median.png)
+![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Non-naive%20random%20cap%20mean%20vs%20median.png)

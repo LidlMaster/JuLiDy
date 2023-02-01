@@ -41,7 +41,7 @@ This will install the extensions matplotlib en pandas.
 
 ## Instructions generating animations:
 To animate an experimental run the first thing to do is run the algorithm using the command as explained above.
-After which you need to change the input in the animate function on line 232. Lastly run the the animate code the following using command:
+After which you need to change the input in the animate function on line 247. Lastly run the the animate code the following using command:
 
 _< $python3 animate_algorithms.py >_
 
@@ -49,7 +49,7 @@ _< $python3 animate_algorithms.py >_
 To generate reliable results the algorithms need to be run more than once. Because of that code was implemented in a sperate file, specificly to run an algorithm a thousand times and collect the result in a excel sheet. 
 To run this code the following example command can be used:
 
-_< $python3 results.py 6x6_3 R >_
+_< $python3 experiments/testing.py 6x6_3 R >_
 
 To access different algorithms and boardconfiguartions use commands as earlier stated above.
 
@@ -59,10 +59,12 @@ After running the planned experiments a few interesting results were found. Firs
 ![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Means%20of%20random%20algorithms.png)
 _Figure 1: In this graph the results of the differnt means of the number of moves preformed during a game from the variations of the random algorithm can be seen compared. In order to calculate these means the algorithms were run a thousand times._
 
-Another insteresting result can be seen in figure 2. When comparing a BFS and DFS algorithms, it is clearly shown that a BFS algorithms can find a path to a solution that is more efficient in number of moves. It also shows that at least in our case a BFS can be performed on a bigger board without needing more RAM memory space to find a solution. Hoever both a BFS and DFS took more RAM memoryspace than was available on our computers when trying to solve game 9x9_5 or more complicated or games with a bigger sized board. What also can be concluded is hat both BFS and DFS agorithms are more efficient in terms of number of moves compared to ay of the random algorithms. Seeing as the number of moves performed by the BFS and DFS algorithms stays under 2500, the lowest number of moves preformed by the non-naive random algrithm on game 6x6_2. But while the number of moves is more efficient, it can also clearly be seen that the random algorithms are far more efficient processingwise. As the random algorithms can solve al the boards a 1000 times without going over the RAM memory limit, while the DFS kills its proces from board 4 or higher and the bfs algorithms kills the proces from board 5 and higher.
+Another interesting result can be seen in figure 2. When comparing a BFS and DFS algorithms, it is clearly shown that a BFS algorithms can find a path to a solution that is more efficient in number of moves. It also shows that at least in our case a BFS can be performed on a bigger board without needing more RAM memory space to find a solution. Hoever both a BFS and DFS took more RAM memoryspace than was available on our computers when trying to solve game 9x9_5 or more complicated or games with a bigger sized board. What also can be concluded is hat both BFS and DFS agorithms are more efficient in terms of number of moves compared to ay of the random algorithms. Seeing as the number of moves performed by the BFS and DFS algorithms stays under 2500, the lowest number of moves preformed by the non-naive random algrithm on game 6x6_2. But while the number of moves is more efficient, it can also clearly be seen that the random algorithms are far more efficient processingwise. As the random algorithms can solve al the boards a 1000 times without going over the RAM memory limit, while the DFS kills its proces from board 4 or higher and the bfs algorithms kills the proces from board 5 and higher.
 
 ![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Means%20of%20bfs%20and%20dfs%20algorithms.png)
-_Figure 2: In this graph the results of the the number of moves preformed during a game from the Breadth-First Search and Depth-First serach algorithms can be compared. Because these algorithms will alway look for similar paths this code was only run once top obtain these resuts._
+_Figure 2: In this graph the results of the the number of moves preformed during a game from the Breadth-First Search and Depth-First serach algorithms can be compared. Because these algorithms will alway look for similar paths this code was only run once top obtain these results._
+
+Lastly was the difference that was found between the mean and the median from the non-naive random algorithm, seen in figure 4. This difference is not visible in the baseline random algorithm and the non-naive random algorithm with cap, seen fin figures 3 and 5. This is probably because there are more outliers in the results of figure 4 or at least relativly more outliers with a high number of moves. This can be explained xby the fact that the vehicles in on the board can be moved back and forth  endlessly while the game can only be solved by a minimum set of moves. This causes the possible datasets to have a minimum range but no maximum.
 
 ![](https://github.com/LidlMaster/JuLiDy/blob/main/figures/Random%20mean%20vs%20median.png)
 _Figure 3: In this graph the the mean different moves and the median number of moves form the baseline random algorithm can be compared. In order to calculate these results the algorithms were run a thousand times._

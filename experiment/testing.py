@@ -1,11 +1,19 @@
-from rushhour import Rushhour
-from board import Board
-from baseline import Random
-import random
+# Import libraries
 from sys import argv
+import statistics
+import os
+import sys
+import inspect
+
+# Import from different folder
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
+
+from rushhour import Rushhour
+from baseline import Random
 from bfs import breadth_first_search
 from dfs import depth_first_search
-import statistics
 
 
 if __name__ == "__main__":
@@ -46,7 +54,9 @@ if __name__ == "__main__":
 
     # Start game
     while True:
+        # Checks if random needs to run
         if mode == "R":
+            # Repeats 1000 times
             while times <= 1000:
                 # Prompt input from user or algorithm 
                 vehicle = algorithm.random_selection(rushhour.cars)
@@ -55,61 +65,38 @@ if __name__ == "__main__":
                 comm += 1
                 # Uses input command to move selected vehicle
                 rushhour.move_cars(command, mode)
-                # Checks if game is solved and ends game
+
+                # Checks if game is solved
                 if rushhour.is_solved():
                     rushhour.give_output(file, field_names)
+
+                    # Add the number of commands and the number of moves to their respective lists
                     command_list.append(comm)
                     move_list.append(rushhour.get_moves(file))
+
+                    # Adds number of times and prints
                     times += 1
-                    rushhour = Rushhour(game_name, size)
-                    algorithm = Random()
-                    dict = rushhour.dict
-                    rushhour.place_cars()
-                    comm = 0
-                    break
-            if times >= 1000: 
-                mean_comm = statistics.mean(command_list)
-                mean_move = statistics.mean(move_list)
-                median_comm = statistics.median(command_list)
-                median_move = statistics.median(move_list)
-                stdev_comm = statistics.stdev(command_list)
-                stdev_move = statistics.stdev(move_list)
-                print("Gemiddeld", mean_comm, "commands")
-                print("Mediaan", median_comm, "commands")
-                print("Standaard deviatie", stdev_comm, "commands")
-                print("Gemiddeld", mean_move, "moves")
-                print("Mediaan", median_move, "moves")
-                print("Standaard deviatie", stdev_move, "moves")
-                break
-        elif mode == "E":
-            while times <= 1000:
-                # Prompt input from user or algorithm 
-                vehicle = algorithm.random_selection(rushhour.cars)
-                afstand = algorithm.random_movement(rushhour)
-                command = algorithm.make_move(vehicle, afstand)
-                comm += 1
-                # Uses input command to move selected vehicle
-                rushhour.move_cars(command, mode)
-                # Checks if game is solved and ends game
-                if rushhour.is_solved():
-                    rushhour.give_output(file, field_names)
-                    command_list.append(comm)
-                    move_list.append(rushhour.get_moves(file))
-                    times += 1
-                    rushhour = Rushhour(game_name, size)
-                    algorithm = Random()
-                    dict = rushhour.dict
-                    rushhour.place_cars()
-                    comm = 0
                     print(times)
+
+                    # Resets game
+                    rushhour = Rushhour(game_name, size)
+                    algorithm = Random()
+                    dict = rushhour.dict
+                    rushhour.place_cars()
+                    comm = 0
                     break
-            if times >= 1000: 
+
+            # Checks if done
+            if times >= 1000:
+                # Calculates the mean, median and standard deviation of the commands and moves
                 mean_comm = statistics.mean(command_list)
                 mean_move = statistics.mean(move_list)
                 median_comm = statistics.median(command_list)
                 median_move = statistics.median(move_list)
                 stdev_comm = statistics.stdev(command_list)
                 stdev_move = statistics.stdev(move_list)
+
+                # Prints the means, medians and standard deviation of the commands and mean
                 print("Gemiddeld", mean_comm, "commands")
                 print("Mediaan", median_comm, "commands")
                 print("Standaard deviatie", stdev_comm, "commands")
@@ -117,8 +104,61 @@ if __name__ == "__main__":
                 print("Mediaan", median_move, "moves")
                 print("Standaard deviatie", stdev_move, "moves")
                 break
-            break      
+
+        # Checks if non-naive random needs to run
+        elif mode == "E":
+            # Runs 1000 times
+            while times <= 1000:
+                # Prompt input from user or algorithm 
+                vehicle = algorithm.random_selection(rushhour.cars)
+                afstand = algorithm.random_movement(rushhour)
+                command = algorithm.make_move(vehicle, afstand)
+                comm += 1
+                # Uses input command to move selected vehicle
+                rushhour.move_cars(command, mode)
+
+                # Checks if game is solved
+                if rushhour.is_solved():
+                    rushhour.give_output(file, field_names)
+                    
+                    # Adds number of moves and commands to their respective lists
+                    command_list.append(comm)
+                    move_list.append(rushhour.get_moves(file))
+
+                    # Keeps track of the number of runs and prints this
+                    times += 1
+                    print(times)
+
+                    # Resets game
+                    rushhour = Rushhour(game_name, size)
+                    algorithm = Random()
+                    dict = rushhour.dict
+                    rushhour.place_cars()
+                    comm = 0
+
+            # Checks if finished
+            if times >= 1000:
+                # Calculates the mean, median and standard deviation of the moves and commands
+                mean_comm = statistics.mean(command_list)
+                mean_move = statistics.mean(move_list)
+                median_comm = statistics.median(command_list)
+                median_move = statistics.median(move_list)
+                stdev_comm = statistics.stdev(command_list)
+                stdev_move = statistics.stdev(move_list)
+
+                # Prints the previous gotten values
+                print("Gemiddeld", mean_comm, "commands")
+                print("Mediaan", median_comm, "commands")
+                print("Standaard deviatie", stdev_comm, "commands")
+                print("Gemiddeld", mean_move, "moves")
+                print("Mediaan", median_move, "moves")
+                print("Standaard deviatie", stdev_move, "moves")
+                break
+            break 
+
+        # Checks if non-naive random with cap
         elif mode == "C":
+            # Runs 1000 times
             while times <= 1000:
                 # Start a while loop, to keep the number of moves under a given number
                 while not rushhour.is_solved(): 
@@ -132,18 +172,26 @@ if __name__ == "__main__":
                     # Uses input command to move selected vehicle
                     rushhour.move_cars(command, mode)
                     # Checks if game is solved and ends game
+
                     if rushhour.is_solved():
                         rushhour.give_output(file, field_names)
+
+                        # Add the number of moves and commands to their lists
                         command_list.append(comm)
                         move_list.append(rushhour.get_moves(file))
+
+                        # Count the number of times and prints these
                         times += 1
+                        print(times)
+
+                        # Resets game
                         rushhour = Rushhour(game_name, size)
                         algorithm = Random()
                         dict = rushhour.dict
                         rushhour.place_cars()
                         comm = 0
-                        print(times)
                         break
+
                     # Reset if number of moves is bigger than the cap
                     elif len(dict) >= 30000:
                         rushhour = Rushhour(game_name, size)
@@ -151,13 +199,18 @@ if __name__ == "__main__":
                         dict = rushhour.dict
                         rushhour.place_cars()
                         comm = 0
+
+            # Checks if done
             if times >= 1000: 
+                # Calculate the means, medians and standard deviations
                 mean_comm = statistics.mean(command_list)
                 mean_move = statistics.mean(move_list)
                 median_comm = statistics.median(command_list)
                 median_move = statistics.median(move_list)
                 stdev_comm = statistics.stdev(command_list)
                 stdev_move = statistics.stdev(move_list)
+
+                # Prints these values
                 print("Gemiddeld", mean_comm, "commands")
                 print("Mediaan", median_comm, "commands")
                 print("Standaard deviatie", stdev_comm, "commands")
@@ -166,12 +219,18 @@ if __name__ == "__main__":
                 print("Standaard deviatie", stdev_move, "moves")
                 break
             break
+
+        # Checks if breadth first search
         elif mode == "B":
             print(rushhour.place_cars())
             breadth_first_search(rushhour)
+
+        # Checks if depth first search
         elif mode == "D":
             print(rushhour.place_cars())
             depth_first_search(rushhour)
+
+        # Checks if invalid name is given
         else:
             print("invalid mode, valid modes are R, E, C, B or D.")   
             break         

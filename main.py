@@ -75,7 +75,7 @@ if __name__ == "__main__":
                 # Prompt input from user or algorithm 
                 vehicle = algorithm.random_selection(rushhour.cars)
                 # print("v:",vehicle)
-                afstand = algorithm.random_movement(rushhour)
+                afstand = algorithm.random_movement()
                 # print("a:",afstand)
                 command = algorithm.make_move(vehicle, afstand)
                 comm += 1

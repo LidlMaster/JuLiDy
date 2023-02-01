@@ -4,12 +4,25 @@ from matplotlib.patches import Rectangle # type: ignore
 from matplotlib.animation import FuncAnimation # type: ignore
 from matplotlib import animation
 import pandas as pd # type: ignore
-from car import Car
+#from car import Car
 import random
 from typing import TypeVar, Dict, Any, List
+import os
+import sys
+import inspect
+
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir) 
+
+from car import Car
+#from ...JuLiDy import car
+
 
 # Make typevar hints for self
 Self = TypeVar("Self", bound="Animate")
+
+script_dir = os.path.dirname(__file__)  # Script directory
 
 # This class is based on the previous made file animation.py and rushhour.py
 class Animate:
@@ -39,8 +52,9 @@ class Animate:
         """Read in the output file to later use it to move.
         Post: output is a Pandas dataframe with the moves each car made during the algorithm
         """
+        full_path = os.path.join(script_dir, '../../JuLiDy/output.csv')
         # Get the output file from the directory
-        output = pd.read_csv('output.csv')
+        output = pd.read_csv(full_path)
         return output
 
     def import_game_file(self) -> str:
@@ -48,7 +62,7 @@ class Animate:
         Post: game is a string which contains the direction to the gameboard file
         """
         # Save the right directory to the gameboard files
-        game = f"gameboards/Rushhour{self.game_name}.csv"
+        game = os.path.join(script_dir, f'../../JuLiDy/gameboards/Rushhour{self.game_name}.csv')
         return game
 
     def create_plot(self) -> Any:
@@ -231,7 +245,7 @@ class Animate:
 # Set up initial state and get variables
 
 # Set up the initial state of Animate
-animates = Animate('9x9_4', 9)
+animates = Animate('6x6_2', 6)
 
 # Get the needed variables to set the board
 output = animates.import_output_file()

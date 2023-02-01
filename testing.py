@@ -7,7 +7,6 @@ from bfs import breadth_first_search
 from dfs import depth_first_search
 import statistics
 
-
 if __name__ == "__main__":
     # Check command line arguments and respond with usage in case of wrong input
     if len(argv) not in [2, 3]:
@@ -55,6 +54,7 @@ if __name__ == "__main__":
                 comm += 1
                 # Uses input command to move selected vehicle
                 rushhour.move_cars(command, mode)
+
                 # Checks if game is solved and ends game
                 if rushhour.is_solved():
                     rushhour.give_output(file, field_names)
@@ -67,6 +67,7 @@ if __name__ == "__main__":
                     rushhour.place_cars()
                     comm = 0
                     break
+
             if times >= 1000: 
                 mean_comm = statistics.mean(command_list)
                 mean_move = statistics.mean(move_list)
@@ -102,7 +103,8 @@ if __name__ == "__main__":
                     rushhour.place_cars()
                     comm = 0
                     print(times)
-                    break
+                    #break
+
             if times >= 1000: 
                 mean_comm = statistics.mean(command_list)
                 mean_move = statistics.mean(move_list)
